@@ -3,6 +3,7 @@ package com.bobomee.android.retrofit2demo.github;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -13,6 +14,7 @@ public interface GithubApi {
     /**
      * See https://developer.github.com/v3/repos/#list-contributors
      */
+    @Headers("Cache-Control: public, max-age=6")
     @GET("/repos/{owner}/{repo}/contributors")
     Observable<List<Contributor>> contributors(@Path("owner") String owner,
                                                @Path("repo") String repo);
@@ -23,6 +25,7 @@ public interface GithubApi {
     /**
      * See https://developer.github.com/v3/users/
      */
+    @Headers("Cache-Control: public, max-age=6")
     @GET("/users/{user}")
     Observable<User> user(@Path("user") String user);
 

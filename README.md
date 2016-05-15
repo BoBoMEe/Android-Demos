@@ -218,15 +218,6 @@ Call<User> getUser(@Header("Authorization") String authorization)
 Call<User> getUser()
 ```
 
-单个设置 ：
-
-```java
-// 设置 单个请求的 缓存时间
-@Headers("Cache-Control: max-age=640000")
-@GET("widget/list")
-Call<List<Widget>> widgetList();
-```
-
 多个设置 ：
 
 ```java
@@ -241,7 +232,11 @@ Call<List<Widget>> widgetList();
 Retrofit的低层依赖的是OkHttp，因此设置缓存就需要用到OkHttp的interceptors，
 参考：[Retrofit2.0+okhttp3缓存机制以及遇到的问题](http://blog.csdn.net/picasso_l/article/details/50579884)
 [How Retrofit with OKHttp use cache data when offline](http://stackoverflow.com/questions/31321963/how-retrofit-with-okhttp-use-cache-data-when-offline)
-如果想要弄清楚缓存机制，则需要了解一下HTTP语义。如上的请求头就设置了缓存时间。
+[使用Retrofit和Okhttp实现网络缓存。无网读缓存，有网根据过期时间重新请求](http://www.jianshu.com/p/9c3b4ea108a7)
+如果想要弄清楚缓存机制，则需要了解一下HTTP语义，缓存的设置需要靠请求和响应头。有如下需求
+
+- 没有网或者网络较差的时候要使用缓存
+- 有网络的时候，为了保证不同的需求，实时性数据，不用缓存。
 
 OkHttp3中有一个Cache类是用来定义缓存的，此类详细介绍了几种缓存策略,具体可看此类源码。
 
@@ -321,7 +316,18 @@ OkHttp3中有一个Cache类是用来定义缓存的，此类详细介绍了几�
 
 ### 第一种类型
 
-有网和没网都先读缓存，降低服务器压力,使用的是maxAge模式，设置过期时间60s,60s之内不管有没有网,都读缓存。
+配置单个请求的@Headers，设置此请求的缓存策略。
+
+```java
+// 设置 单个请求的 缓存时间
+@Headers("Cache-Control: max-age=640000")
+@GET("widget/list")
+Call<List<Widget>> widgetList();
+```
+
+### 第二种类型
+
+有网和没网都先读缓存，统一缓存策略，降低服务器压力。
 
 ```java
 private Interceptor cacheInterceptor() {
@@ -344,9 +350,9 @@ private Interceptor cacheInterceptor() {
       }
 ```
 
-### 第二种类型
+### 第三种类型
 
-结合第一种类型，离线读取本地缓存，在线获取最新数据(先读缓存，60s设置)。
+结合前两种，离线读取本地缓存，在线获取最新数据(读取单个请求的请求头，亦可统一设置)。
 
 ```java
 private Interceptor cacheInterceptor() {
@@ -354,7 +360,6 @@ private Interceptor cacheInterceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-                Response response = chain.proceed(request);
 
                 if (!AppUtil.isNetworkReachable(sContext)) {
                     request = request.newBuilder()
@@ -363,22 +368,22 @@ private Interceptor cacheInterceptor() {
                             .build();
                 }
 
+                Response response = chain.proceed(request);
+
                 if (AppUtil.isNetworkReachable(sContext)) {
-                    int maxAge = 60; // read from cache for 1 minute
-                    Logger.i("has network maxAge=" + maxAge);
+                    //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+                    String cacheControl = request.cacheControl().toString();
+                    Logger.i("has network ,cacheControl=" + cacheControl);
                     return response.newBuilder()
+                            .header("Cache-Control", cacheControl)
                             .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .addHeader("Cache-Control", "public, max-age=" + maxAge)
                             .build();
                 } else {
-                    Logger.i("network error");
                     int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
-                    Logger.i("has maxStale=" + maxStale);
+                    Logger.i("network error ,maxStale="+maxStale);
                     return response.newBuilder()
+                            .header("Cache-Control", "public, only-if-cached, max-stale="+maxStale)
                             .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                             .build();
                 }
 
@@ -413,10 +418,11 @@ private OkHttpClient client() {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .retryOnConnectionFailure(true)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .addNetworkInterceptor(cacheInterceptor())
-                .cache(cache())
-                .build();
+                               .connectTimeout(15, TimeUnit.SECONDS)
+                               .addNetworkInterceptor(cacheInterceptor())
+                               .addInterceptor(cacheInterceptor())
+                               .cache(cache())
+                               .build();
 
         return client;
     }
@@ -424,13 +430,15 @@ private OkHttpClient client() {
 
 Retrofit2+RxJava 使用Demo：[Retrofit2Demo](https://github.com/BoBoMEe/Retrofit2Demo/)
 
-参考：[Retrofit 2.0 + OkHttp 3.0 配置](https://drakeet.me/retrofit-2-0-okhttp-3-0-config)
+参考：
+[Retrofit 2.0 + OkHttp 3.0 配置](https://drakeet.me/retrofit-2-0-okhttp-3-0-config)
 [官方文档](http://square.github.io/retrofit/#restadapter-configuration)
 [更新到Retrofit2的一些技巧](http://blog.csdn.net/tiankong1206/article/details/50720758)
 [Effective OkHttp](http://omgitsmgp.com/2015/12/02/effective-okhttp/)
 [Okhttp-wiki 之 Interceptors 拦截器](http://www.jianshu.com/p/2710ed1e6b48)
 [Retrofit2.0+okhttp3缓存机制以及遇到的问题](http://blog.csdn.net/picasso_l/article/details/50579884)
 [How Retrofit with OKHttp use cache data when offline](http://stackoverflow.com/questions/31321963/how-retrofit-with-okhttp-use-cache-data-when-offline)
+[使用Retrofit和Okhttp实现网络缓存。无网读缓存，有网根据过期时间重新请求](http://www.jianshu.com/p/9c3b4ea108a7)
 [用 Retrofit 2 简化 HTTP 请求](https://realm.io/cn/news/droidcon-jake-wharton-simple-http-retrofit-2/)
 [Retrofit请求参数注解字段说明](http://www.loongwind.com/archives/242.html)
 [Retrofit2 完全解析 探索与okhttp之间的关系](http://blog.csdn.net/lmj623565791/article/details/51304204)
