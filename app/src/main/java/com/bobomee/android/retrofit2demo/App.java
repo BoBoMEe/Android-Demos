@@ -1,22 +1,17 @@
 package com.bobomee.android.retrofit2demo;
 
-import android.app.Application;
-import android.content.Context;
-
+import com.bobomee.android.common.app.BaseApplication;
 import com.orhanobut.logger.AndroidLogTool;
 import com.orhanobut.logger.Logger;
 
 /**
  * Created by bobomee on 16/5/12.
  */
-public class App extends Application {
-
-    public static Context sContext;
+public class App extends BaseApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sContext = this;
         Logger
                 .init("_Retrofit2.0_")                 // default PRETTYLOGGER or use just init()
                 .methodCount(3)                 // default 2

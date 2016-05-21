@@ -1,72 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    >
-
-
-    <android.support.v7.widget.GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/gridlayout"
-        android:layout_gravity="center_horizontal"
-        app:columnCount="4"
-        app:useDefaultMargins="true">
-
-        <TextView
-            android:text="owner:"
-            app:layout_gravity="left"/>
-
-        <EditText
-            android:text="square"
-            android:hint="owner"
-            android:id="@+id/owner"
-            android:ems="12"
-            app:layout_columnSpan="3"/>
-
-        <TextView
-            android:text="repo:"
-            app:layout_column="0"
-            app:layout_gravity="left"/>
-
-        <EditText
-            android:text="retrofit"
-            android:hint="reponame"
-            android:id="@+id/reponame"
-            android:ems="12"
-            app:layout_columnSpan="3"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/contributors"
-            android:text="contributors"
-            app:layout_column="1"/>
+            android:id="@+id/simple_get"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/simple_get_request" />
 
         <Button
-            android:id="@+id/fullinfo"
-            android:text="full User Info"
-            app:layout_column="2"/>
+            android:id="@+id/simple_post"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/simple_post_request" />
 
-    </android.support.v7.widget.GridLayout>
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-
-    <ListView
-        android:layout_width="match_parent"
-        android:id="@+id/list"
-        android:layout_below="@id/gridlayout"
-        android:layout_height="wrap_content"/>
-
-
+    </LinearLayout>
 </RelativeLayout>

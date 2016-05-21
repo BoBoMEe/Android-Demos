@@ -1,4 +1,4 @@
-package com.bobomee.android.retrofit2demo.github;
+package com.bobomee.android.retrofit2demo.github.model;
 
 public class Contributor {
     public String login;
