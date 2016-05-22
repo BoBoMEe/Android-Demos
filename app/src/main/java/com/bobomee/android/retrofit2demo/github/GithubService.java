@@ -1,36 +1,22 @@
 package com.bobomee.android.retrofit2demo.github;
 
-import com.bobomee.android.retrofit2demo.RetrofitClient;
+import com.bobomee.android.retrofit2demo.client.Retrofit2Client;
 
-import retrofit2.Retrofit;
-
-public class GithubService {
-
-    private static Retrofit retrofit;
-
-    private static Retrofit getRetrofit() {
-        if (null == retrofit) {
-            retrofit = new RetrofitClient().getRetrofit();
-        }
-        return retrofit;
-    }
-
-    private static GithubService githubService;
+public enum GithubService {
+    INSTANCE;
 
     private GithubApi githubApi;
 
-    private GithubService() {
-        githubApi = getRetrofit().create(GithubApi.class);
+    GithubService() {
+        githubApi = Retrofit2Client.INSTANCE
+                .getRetrofitBuilder()
+                .baseUrl(GithubApi.BASE_URL).build()
+                .create(GithubApi.class);
     }
 
-    public GithubApi getGithubApi(){
+    public GithubApi getGithubApi() {
         return githubApi;
     }
 
-    public static GithubService getInstance(){
-        if (null == githubService)githubService = new GithubService();
-
-        return githubService;
-    }
 
 }

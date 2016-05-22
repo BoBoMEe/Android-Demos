@@ -1,17 +1,23 @@
-package com.bobomee.android.retrofit2demo;
+package com.bobomee.android.retrofit2demo.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Pair;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.bobomee.android.retrofit2demo.github.Contributor;
+import com.bobomee.android.retrofit2demo.R;
+import com.bobomee.android.retrofit2demo.github.model.Contributor;
 import com.bobomee.android.retrofit2demo.github.GithubApi;
 import com.bobomee.android.retrofit2demo.github.GithubService;
-import com.bobomee.android.retrofit2demo.github.User;
+import com.bobomee.android.retrofit2demo.github.model.User;
+import com.bobomee.android.retrofit2demo.ui.adapter.LogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -19,18 +25,22 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 import static android.text.TextUtils.isEmpty;
-import static java.lang.String.format;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Created by bobomee on 16/5/15.
+ */
+public class SimpleGetFragment extends BaseFragment {
 
     @Bind(R.id.owner)
     EditText owner;
@@ -49,19 +59,29 @@ public class MainActivity extends BaseActivity {
     private LogAdapter _adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int provideLayoutId() {
+        return R.layout.simple_get_layout;
+    }
 
-        _githubService = GithubService.getInstance().getGithubApi();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        _githubService = GithubService.INSTANCE.getGithubApi();
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         _setupLogger();
     }
 
     private void _setupLogger() {
-        _adapter = new LogAdapter(this, new ArrayList<String>());
+        _adapter = new LogAdapter(activity, new ArrayList<String>());
         list.setAdapter(_adapter);
     }
-
 
     private boolean _isCurrentlyOnMainThread() {
         return Looper.myLooper() == Looper.getMainLooper();
@@ -83,6 +103,12 @@ public class MainActivity extends BaseActivity {
                                 return null != contributors && contributors.size() > 0;
                             }
                         })
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                loading.setVisibility(View.VISIBLE);
+                            }
+                        })
                         .observeOn(Schedulers.io())
                         .switchMap(new Func1<List<Contributor>, Observable<Contributor>>() {
                             @Override
@@ -94,19 +120,21 @@ public class MainActivity extends BaseActivity {
                         .subscribe(new Observer<Contributor>() {
                             @Override
                             public void onCompleted() {
+                                loading.setVisibility(View.GONE);
                                 _adapter.add("onCompleted");
                                 Logger.i("onCompleted");
                             }
 
                             @Override
                             public void onError(Throwable e) {
+                                loading.setVisibility(View.GONE);
                                 _adapter.add("onError" + e.toString());
                                 Logger.i("onError" + e.toString());
                             }
 
                             @Override
                             public void onNext(Contributor contributor) {
-                                String s = format("%s has made %d contributions to %s",
+                                String s = String.format("%s has made %d contributions to %s",
                                         contributor.login,
                                         contributor.contributions,
                                         reponame.getText().toString());
@@ -132,6 +160,12 @@ public class MainActivity extends BaseActivity {
                             public Boolean call(List<Contributor> contributors) {
                                 _adapter.clear();
                                 return null != contributors && contributors.size() > 0;
+                            }
+                        })
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                loading.setVisibility(View.VISIBLE);
                             }
                         })
                         .observeOn(Schedulers.io())
@@ -161,12 +195,14 @@ public class MainActivity extends BaseActivity {
                         .subscribe(new Observer<Pair<User, Contributor>>() {
                             @Override
                             public void onCompleted() {
+                                loading.setVisibility(View.GONE);
                                 _adapter.add("onCompleted");
                                 Logger.i("onCompleted");
                             }
 
                             @Override
                             public void onError(Throwable e) {
+                                loading.setVisibility(View.GONE);
                                 _adapter.add("onError" + e.toString());
                                 Logger.i("onError" + e.toString());
                             }
@@ -177,7 +213,7 @@ public class MainActivity extends BaseActivity {
                                 User user = userContributorPair.first;
                                 Contributor contributor = userContributorPair.second;
 
-                                String s = format("%s(%s) has made %d contributions to %s",
+                                String s = String.format("%s(%s) has made %d contributions to %s",
                                         user.name,
                                         user.email,
                                         contributor.contributions,
@@ -201,6 +237,16 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }
-
-

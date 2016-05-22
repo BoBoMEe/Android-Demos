@@ -1,7 +1,9 @@
-package com.bobomee.android.retrofit2demo;
+package com.bobomee.android.retrofit2demo.ui.adapter;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+
+import com.bobomee.android.retrofit2demo.R;
 
 import java.util.List;
 

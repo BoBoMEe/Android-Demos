@@ -1,4 +1,4 @@
-package com.bobomee.android.retrofit2demo;
+package com.bobomee.android.retrofit2demo.ui;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;

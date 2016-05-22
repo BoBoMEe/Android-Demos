@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Retrofit2Demo</string>
+    <string name="simple_get_request">simple_get_request</string>
+    <string name="login_to_github">login to github</string>
+    <string name="simple_post_request">simple_post_request</string>
+    <string name="logout">logout</string>
 </resources>
