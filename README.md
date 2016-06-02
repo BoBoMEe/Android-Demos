@@ -633,6 +633,15 @@ private Interceptor cacheInterceptor() {
 
 此中方式的缓存Interceptor实现：[OfflineCacheControlInterceptor.java](https://github.com/BoBoMEe/Retrofit2Demo/blob/master/htttp/src/main/java/com/bobomee/android/htttp/okhttp/interceptor/OfflineCacheControlInterceptor.java)
 
+## 错误处理
+
+在请求网络的时候,我们不止会得到HttpException,还有我们和服务器约定的errorCode和errorMessage,为了统一处理,我们可以
+预处理以下上面两个字段,定义BaseModel,在ConverterFactory中进行处理,
+可参照:
+
+- [Retrofit+RxJava实战日志(3)-网络异常处理](http://blog.csdn.net/efan006/article/details/50544204)
+- [retrofit-2-simple-error-handling](https://futurestud.io/blog/retrofit-2-simple-error-handling)
+
 
 ## 网络状态监听
 
@@ -768,3 +777,5 @@ Retrofit2+RxJava 使用Demo：[Retrofit2Demo](https://github.com/BoBoMEe/Retrofi
 [用 Retrofit 2 简化 HTTP 请求](https://realm.io/cn/news/droidcon-jake-wharton-simple-http-retrofit-2/)
 [Retrofit请求参数注解字段说明](http://www.loongwind.com/archives/242.html)
 [Android文件存储使用参考 - liaohuqiu](http://www.tuicool.com/articles/AvUnqiy)
+[Retrofit+RxJava实战日志(3)-网络异常处理](http://blog.csdn.net/efan006/article/details/50544204)
+[retrofit-2-simple-error-handling](https://futurestud.io/blog/retrofit-2-simple-error-handling)
