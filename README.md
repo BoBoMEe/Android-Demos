@@ -10,4 +10,6 @@ The project branch list:
 * common : Android common tools
 * dagger2 : Simple Demo for  Dagger2
 * mvp : Simple Demo for  MVP
+* orm : Android orm learn demo
+* provider : android contentprovider learn demo
 * retrofit2 : Simple Demo for Retrofit2
