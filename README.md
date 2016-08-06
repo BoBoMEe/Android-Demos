@@ -9,6 +9,7 @@ The project branch list:
 * blog : csdn blog codes
 * common : Android common tools
 * dagger2 : Simple Demo for  Dagger2
+* design_patterns : The Demos for learn Design Patterns
 * mvp : Simple Demo for  MVP
 * note : the note for Android develop
 * orm : Android orm learn demo
