@@ -6,6 +6,7 @@ The project branch list:
 
 * master : Main branch
 * activityfragment : Solving the communication problem of activity and fragment with the observer pattern
+* animation : android animation and animator demos
 * blog : csdn blog codes
 * common : Android common tools
 * dagger2 : Simple Demo for  Dagger2
