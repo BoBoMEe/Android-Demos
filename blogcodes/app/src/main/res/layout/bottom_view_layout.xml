@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:onClick="pop"
+        android:id="@+id/dialog_fragment"
+        android:text="@string/dialogfragment"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <Button
+        android:id="@+id/dialog_bottomview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:onClick="pop"
+        android:text="@string/bottomsheet" />
+
+    <Button
+        android:id="@+id/alert_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:onClick="pop"
+        android:text="@string/alertdialog" />
+
+
+</LinearLayout>

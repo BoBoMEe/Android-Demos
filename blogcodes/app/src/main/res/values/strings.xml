@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BlogDemos</string>
+
+    <string name="share">分享</string>
+    <string name="upload">上传</string>
+    <string name="call">呼叫</string>
+    <string name="help">帮助</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="linear">LinearLayoutManager</string>
+    <string name="grid">GridLayoutManager</string>
+    <string name="staggered">StaggeredGridLayoutManager</string>
+    <string name="spansize">GridSpanSizeRecyclerView</string>
+    <string name="gridwithheadr">GridWithHeaderRecyclerView</string>
+    <string name="gridaddremove">GridWithItem add and remove</string>
+    <string name="gridselect">GridWith Select Mode</string>
+    <string name="recyclerview_linearlayoutmanager">recyclerview linearlayoutmanager</string>
+    <string name="recyclerview_gridlayoutmanager">recyclerview gridlayoutmanager</string>
+    <string name="recyclerview_staggeredgridlayoutmanager">recyclerview staggeredgridlayoutmanager</string>
+    <string name="dialogfragment">底部弹出的DialogFragment</string>
+    <string name="bottomsheet">底部弹出的BottomSheet</string>
+    <string name="alertdialog">AlertDialog</string>
+    <string name="android_js">android调用 JS方法</string>
+    <string name="android_js_js">android调用 JS方法获取返回值，并且调用JS显示</string>
+    <string name="android_studio">Android Studio</string>
+    <string name="android_studio_android_com">android.studio@android.com</string>
+    <string name="header">header</string>
+    <string name="vertical">vertical</string>
+    <string name="horizontal">horizontal</string>
+    <string name="screenshot">截屏</string>
+    <string name="import_string">Import</string>
+    <string name="gallery">Gallery</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="tools">Tools</string>
+    <string name="share_string">Share</string>
+    <string name="send_string">Send</string>
+    <string name="sort_string">Sort</string>
+    <string name="add_string">Add</string>
+    <string name="delete_string">Delete</string>
+</resources>

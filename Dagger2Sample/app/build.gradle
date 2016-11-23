@@ -1,0 +1,71 @@
+/*
+ *  Copyright (C) 2016 BoBoMEe(wbwjx115@gmail.com)
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.3"
+
+  defaultConfig {
+    applicationId "com.bobomee.android.dagger2sample"
+    minSdkVersion 15
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  // 注释冲突
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  // 使用Java1.8
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
+  compile 'com.android.support:appcompat-v7:23.4.0'
+
+  apt 'com.google.dagger:dagger-compiler:2.0.2'
+  compile 'com.google.dagger:dagger:2.0.2'
+  provided 'javax.annotation:jsr250-api:1.0'
+
+  compile 'io.reactivex:rxandroid:1.1.0' // RxAndroid
+  compile 'io.reactivex:rxjava:1.1.0' // RxJava
+
+  compile 'com.squareup.retrofit2:retrofit:2.0.2' // Retrofit网络处理
+  compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2' // Retrofit的rx解析库
+  compile 'com.squareup.retrofit2:converter-gson:2.0.2' // Retrofit的gson库
+
+  compile 'com.jakewharton:butterknife:8.0.1' // 标注
+  apt 'com.jakewharton:butterknife-compiler:8.0.1'
+
+}

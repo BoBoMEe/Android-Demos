@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gridLayoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:rowDelay="75%"
+    android:columnDelay="60%"
+    android:directionPriority="none"
+    android:direction="bottom_to_top|right_to_left"
+    android:animation="@android:anim/slide_in_left"/>
+
+<!--
+
+rowDelay : 每一行动画的延迟
+columnDelay : 每一列动画的延迟
+directionPriority : 方向优先级, row(行优先),collumn(列优先),none(同时进行)
+direction : 动画方向,默认为left_to_right | top_to_bottom(从上往下，从左往右)
+animation : 动画资源
+
+-->

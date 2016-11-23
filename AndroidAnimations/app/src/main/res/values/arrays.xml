@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="recycler_items">
+    <item>LayoutAnimation</item>
+    <item>GridLayoutAnimation</item>
+    <item>LayoutChangeAnimation</item>
+    <item>ViewAnimation</item>
+    <item>Interpolator</item>
+    <item>DrawableAnimation</item>
+    <item>PropertyAnimation</item>
+    <item>ActivityTransition</item>
+  </array>
+
+</resources>

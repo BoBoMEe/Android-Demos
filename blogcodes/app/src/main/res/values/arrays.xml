@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="bottom_list">
+        <item>@mipmap/perm_group_messages</item>
+        <item>@mipmap/perm_group_phone_calls</item>
+        <item>@mipmap/perm_group_system_clock</item>
+        <item>@mipmap/perm_group_system_tools</item>
+        <item>@mipmap/perm_group_accounts</item>
+    </integer-array>
+
+</resources>

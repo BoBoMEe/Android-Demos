@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="360"/>
+
+
+    <!--
+
+    android:duration 动画从开始到结束持续的时长，单位为毫秒
+    android:fromDegrees 旋转开始的角度
+    android:toDegrees 旋转结束的角度
+    android:pivotX 旋转中心点的X坐标，纯数字表示相对于View本身左边缘的像素偏移量；
+    带"%"后缀时表示相对于View本身左边缘的百分比偏移量；
+    带"%p"后缀时表示相对于父View左边缘的百分比偏移量
+    android:pivotY 旋转中心点的Y坐标，纯数字表示相对于View本身顶部边缘的像素偏移量；
+    带"%"后缀时表示相对于View本身顶部边缘的百分比偏移量；
+    带"%p"后缀时表示相对于父View顶部边缘的百分比偏移量
+
+    -->

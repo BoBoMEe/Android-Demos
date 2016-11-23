@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArcMenu">
+        <attr name="arcPosition">
+            <enum name="left_top" value="0" />
+            <enum name="right_top" value="1" />
+            <enum name="right_bottom" value="2" />
+            <enum name="left_bottom" value="3" />
+            <enum name="center_bottom" value="4" />
+        </attr>
+        <attr name="arcRadius" format="dimension" />
+        <attr name="arcMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="IndexView">
+        <attr name="indexTextSize" format="dimension" />
+        <attr name="indexTextColor" format="color" />
+        <attr name="indexSelectTextColor" format="color" />
+        <attr name="indexSelectBackGround" format="color" />
+    </declare-styleable>
+
+
+    <!--CompoundDrawablesTextView的style-->
+    <attr name="Compound_Drawables_TextView_Style" format="reference" />
+
+    <declare-styleable name="TabIndicator">
+        <attr name="icsLinearLayoutStyle" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="vpiIsWeight" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Image3DSwitchView">
+        <attr name="switcherImagePadding" format="integer" />
+        <attr name="switcherImageRatio" format="float" />
+    </declare-styleable>
+</resources>

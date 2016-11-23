@@ -1,0 +1,55 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BottomToTopAnim" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/bottomview_anim_enter</item>
+        <item name="@android:windowExitAnimation">@anim/bottomview_anim_exit</item>
+    </style>
+
+
+    <!--屏幕底部的dialog-->
+    <style name="BottomDialog" parent="AppTheme.NoActionBar">
+        <item name="android:windowIsFloating">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/BottomToTopAnim</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Compound_Default">
+        <item name="Compound_Drawables_TextView_Style">@style/Widget.cdtStyle.CustomcdtStyle</item>
+    </style>
+
+    <style name="Widget.cdtStyle.CustomcdtStyle">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:text">"CDT"</item>
+    </style>
+
+    <style name="Theme.CompoundDrawablesTextViewStyleDefault" parent="android:Theme">
+        <item name="Compound_Drawables_TextView_Style">@style/Widget.cdtStyle</item>
+    </style>
+
+    <style name="Widget" />
+
+    <style name="Widget.cdtStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#fab</item>
+    </style>
+
+
+</resources>

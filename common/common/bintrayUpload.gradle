@@ -1,0 +1,116 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+
+// read properties
+def projectName = "AndroidCommon"
+def projectGroupId = "com.bobomee.android"
+def projectArtifactId = "common"
+def projectVersionName = android.defaultConfig.versionName
+def projectPackaging = "aar"
+def projectSiteUrl = "https://github.com/BoBoMEe/AndroidDev/tree/common"
+def projectGitUrl = "https://github.com/BoBoMEe/AndroidDev.git"
+def projectDesc = "A helpful library(develop tools) for Android"
+def projectIssueUrl = "https://github.com/BoBoMEe/AndroidDev/issues"
+
+def developerId = "bobomee"
+def developerName = "BoBoMEe"
+def developerEmail = "wbwjx115@gmail.com"
+
+def bintrayUser = "bobomee"
+def bintrayApikey = "a8bea95a15202a6f8580bb4dc47e3d78f5cc0928"
+
+def javadocName = "AndroidCommon"
+
+group = projectGroupId
+
+// This generates POM.xml with proper parameters
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                name projectName
+                groupId projectGroupId
+                artifactId projectArtifactId
+                version projectVersionName
+                packaging projectPackaging
+                url projectSiteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection projectGitUrl
+                    developerConnection projectGitUrl
+                    url projectSiteUrl
+                }
+            }
+        }
+    }
+}
+
+task writeNewPom << {
+    pom.writeTo("$buildDir/"+projectVersionName+".pom.xml")
+}
+
+// This generates sources.jar
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+// This generates javadoc.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    //    archives javadocJar
+    archives sourcesJar
+}
+
+// javadoc configuration
+javadoc {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version projectVersionName
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title javadocName
+    }
+}
+
+// bintray configuration
+bintray {
+    user = bintrayUser
+    key = bintrayApikey
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = projectName
+        desc = projectDesc
+        websiteUrl = projectSiteUrl
+        issueTrackerUrl = projectIssueUrl
+        vcsUrl = projectGitUrl
+        licenses = ["Apache-2.0"]
+        labels = ['android']
+        publish = true
+        publicDownloadNumbers = true
+    }
+}

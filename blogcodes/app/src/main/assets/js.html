@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script type="text/javascript">
+function android_call_js_no_parameter(){  
+     document.getElementById("content").innerHTML +=     
+         "<br\>android 调用了 js 函数";  
+}  
+var index=0;  
+function android_call_js_parameter(arg){  
+	index+=Number(arg);
+     document.getElementById("content").innerHTML +=("<br\>"+index);  
+     return index;
+}  
+
+function  button2click(){  
+   return 1;
+}
+
+function button2click1(){
+window.js.showResult(index);
+}
+
+function button1click(){
+window.js.comeplete();
+}
+    </script>
+</head>
+<body>
+<br/>
+
+<button onclick="button1click()">comeplete()</button>
+
+<div id="content"></div>
+</body>
+</html>  

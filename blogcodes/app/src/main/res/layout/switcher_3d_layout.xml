@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent"
+     >
+
+    <com.bobomee.blogdemos.view.switcher3d.Image3DSwitchView
+        android:id="@+id/image_switch_view"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="match_parent" >
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image1"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image01" />
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image2"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image02" />
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image3"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image03" />
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image4"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image01" />
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image5"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image02" />
+
+        <com.bobomee.blogdemos.view.switcher3d.Image3DView
+            android:id="@+id/image6"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/image03" />
+
+    </com.bobomee.blogdemos.view.switcher3d.Image3DSwitchView>
+
+</RelativeLayout>

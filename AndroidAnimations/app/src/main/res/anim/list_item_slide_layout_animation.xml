@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/slide_in_from_left"
+    android:animationOrder="random"
+    android:delay="1"/>
+<!--
+delay : ViewGroup 中单个Item动画的开始延时,取值是android:animation 所指定动画时长的倍数,可以是float,也可以是百分数,默认0.5
+比如slide_in_from_left中定义的动画时长是500ms,这里delay=1,那么在上一个动画执行之后延时500ms执行下一个tem的动画
+
+animationOrder : 动画开始顺序,normal(正序)、reverse(倒序)、random(随机)
+
+animation : 指定动画资源animation,注意不能使用animator
+-->

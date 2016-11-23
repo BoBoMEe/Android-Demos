@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bobomee.blogdemos">
+
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <application
+        android:name="com.bobomee.android.common.app.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.bobomee.blogdemos.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.bobomee.blogdemos.view.arcmenu.ArcMenuActivity" />
+        <activity android:name="com.bobomee.blogdemos.view.index.IndexListActivity" android:theme="@style/AppTheme"/>
+        <activity android:name="com.bobomee.blogdemos.tools.ScreenShotActivity" />
+        <activity android:name="com.bobomee.blogdemos.js_native.JsJavaInteractive" />
+        <activity android:name="com.bobomee.blogdemos.dialog_fragment.BottomViewActivity" />
+        <activity
+            android:name="com.bobomee.blogdemos.view.compound.CompoundDrawablesTextViewActivity"
+            android:theme="@style/AppTheme.NoActionBar.Compound_Default" />
+        <activity android:name="com.bobomee.blogdemos.view.switcher3d.Image3DSwitchActivity"/>
+        <activity android:name="com.bobomee.blogdemos.tab_head_list_vp.ClipViewPagerListActivity"/>
+        <activity android:name=".glide.GlidePlayActivity"/>
+        <activity android:name=".recycler.main.RecyclerViewActivity"/>
+        <activity android:name=".recycler.linear.LinearLayoutManagerRecycler"/>
+        <activity android:name=".recycler.grid.GridLayoutManagerRecycler"/>
+        <activity android:name=".recycler.staggered.StaggeredRecycler"/>
+        <activity android:name=".recycler.grid.GridSpanSizeRecycler"/>
+        <activity android:name=".recycler.grid.GridWithHeaderRecycler"/>
+        <activity android:name=".recycler.grid.GridAddItemRecycler"/>
+        <activity android:name=".recycler.staggered.StaggeredSelectRecycler"/>
+        <activity android:name=".base.BaseActivity"/>
+        <activity android:name=".base.BaseListActivity"/>
+        <activity android:name=".recycler.BaseRecycler"/>
+        <activity android:name=".scroll.View_st_sb"/>
+        <activity android:name=".activityfragment.ActivityFragment"/>
+
+    </application>
+
+</manifest>

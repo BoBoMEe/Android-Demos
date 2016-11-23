@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bobomee.android.androidanimations">
+
+  <application
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme">
+    <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".layout.LayoutAnimationActivity"
+        android:label="@string/layout_animation"
+        android:parentActivityName=".MainActivity">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity"/>
+    </activity>
+    <activity
+        android:name=".layout.GridLayoutAnimationActivity"
+        android:label="@string/grid_animation"
+        android:parentActivityName=".MainActivity">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity"/>
+    </activity>
+    <activity android:name=".layout.LayoutChangesActivity"
+        android:label="@string/title_layout_changes"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".view.ViewAnimationActivity"
+        android:label="@string/view_animation"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".view.InterpolatorActivity"
+        android:label="@string/interpolator"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".drawable.DrawableAnimationActivity"
+        android:label="@string/drawable_animation"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".property.AnimatorActivity"
+        android:label="@string/animator_label"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".contenttransition.TransitionBActivity"
+        android:label="@string/transition"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".contenttransition.TransitionActivity"
+        android:label="@string/transition"
+        android:parentActivityName=".MainActivity">>
+      <meta-data android:name="android.support.PARENT_ACTIVITY"
+          android:value=".MainActivity" />
+    </activity>
+  </application>
+
+</manifest>

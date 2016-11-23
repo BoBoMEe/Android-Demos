@@ -1,0 +1,21 @@
+<resources>
+  <string name="app_name">AndroidAnimations</string>
+  <string name="layout_animation">LayoutAnimation</string>
+  <string name="grid_animation">GridLayoutAnimation</string>
+  <string name="message_empty_layout_changes">Add an item above to get started.</string>
+  <string name="action_add_item">Add item</string>
+  <string name="action_remove_item">Remove item</string>
+  <string name="title_layout_changes">Layout Changes</string>
+  <string name="view_animation">View Animation</string>
+  <string name="interpolator">Interpolator</string>
+  <string name="drawable_animation">Drawable Animation</string>
+  <string name="animator_label">Animator Animation</string>
+  <string name="object_animator">Object Animator</string>
+  <string name="animator_set">Animator Set</string>
+  <string name="animate">animate</string>
+  <string name="transition">5.0android Transition</string>
+  <string name="tower_of_london">The Tower of London has played a prominent role in English history. It was besieged several times and controlling it has been important to controlling the country. The Tower has served variously as an armoury, a treasury, a menagerie, the home of the Royal Mint, a public records office, and the home of the Crown Jewels of the United Kingdom. From the early 14th century until the reign of Charles II, a procession would be led from the Tower to Westminster Abbey on the coronation of a monarch. In the absence of the monarch, the Constable of the Tower is in charge of the castle. This was a powerful and trusted position in the medieval period. In the late 15th century the castle was the prison of the Princes in the Tower. Under the Tudors, the Tower became used less as a royal residence, and despite attempts to refortify and repair the castle its defences lagged behind developments to deal with artillery.</string>
+  <string name="transitionChromeName">chrome</string>
+  <string name="transitionTextName">text</string>
+  <string name="transitionImageName">image</string>
+</resources>

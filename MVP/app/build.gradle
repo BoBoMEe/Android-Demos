@@ -1,0 +1,61 @@
+/*
+ *
+ *    Copyright (C) 2016 BoBoMEe(wbwjx115@gmail.com)
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    applicationId "com.bobomee.android.mvp"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      // Disable minifier until build tools 2.2 is out due to bug in proguard file parser.
+      minifyEnabled false
+      // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+    }
+  }
+}
+
+/*
+ Dependency versions are defined in the top level build.gradle file. This helps keeping track of
+ all versions in a single place. This improves readability and helps managing project complexity.
+ */
+dependencies {
+  // App's dependencies, including test
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+  compile "com.google.guava:guava:$rootProject.guavaVersion"
+  // Dependencies for local unit tests
+  testCompile "junit:junit:$rootProject.ext.junitVersion"
+
+  compile "com.jakewharton:butterknife:$rootProject.ext.butterknife"
+  apt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknife"
+  compile 'com.joanzapata.android:base-adapter-helper:1.1.11'
+
+  compile project(':http')
+}

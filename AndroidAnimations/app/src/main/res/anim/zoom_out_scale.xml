@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXScale="1.0"
+    android:fromYScale="1.0"
+    android:pivotX="0%"
+    android:pivotY="100%"
+    android:toXScale="1.5"
+    android:toYScale="1.5"/>
+
+
+    <!--
+    android:duration 动画从开始到结束持续的时长，单位为毫秒
+    android:fromXScale 动画开始时X坐标上的缩放尺寸
+    android:toXScale 动画结束时X坐标上的缩放尺寸
+    android:fromYScale 动画开始时Y坐标上的缩放尺寸
+    android:toYScale 动画结束时Y坐标上的缩放尺寸
+    PS：以上四个属性，0.0表示缩放到没有，1.0表示正常无缩放，小于1.0表示收缩，大于1.0表示放大
+
+    android:pivotX 缩放时的固定不变的X坐标，一般用百分比表示，0%表示左边缘，100%表示右边缘
+
+    android:pivotY 缩放时的固定不变的Y坐标，一般用百分比表示，0%表示顶部边缘，100%表示底部边缘
+    -->

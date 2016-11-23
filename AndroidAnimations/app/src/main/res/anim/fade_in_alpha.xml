@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"/>
+
+    <!--
+
+    android:duration 动画从开始到结束持续的时长，单位为毫秒
+    android:fromAlpha 动画开始时的透明度，0.0为全透明，1.0为不透明，默认为1.0
+    android:toAlpha 动画结束时的透明度，0.0为全透明，1.0为不透明，默认为1.0
+    -->
