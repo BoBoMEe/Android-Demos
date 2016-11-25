@@ -70,3 +70,5 @@ Double shift： Search Everywhere
 [Android studio 上非常好用的快捷键](http://gold.xitu.io/entry/579973e4a633bd0060d905ff/promote?utm_source=baidu&utm_medium=keyword&utm_content=android_studio_key&utm_campaign=q3_search)
 
 [【小技巧】AndroidStudio利用断点打印日志](http://www.jianshu.com/p/eb3d8674308a)
+
+[LEARN AND SUPPORT >> JetBrains](https://www.jetbrains.com/idea/documentation/)
