@@ -13,7 +13,11 @@ compile 'com.bobomee.android:common:1.3.8'
 Note
 ----
 
-- WebViewUtil: 包括文件下载，HTTP/HTTPS混合，重定向，硬件加速
+- WebViewUtil:
+【`WebView`重定向判断】
+【`HTTP/HTTPS`混合使用】
+【`WebView`文件下载】
+【`WebView`硬件加速方案】
 
 参考：
 
@@ -26,3 +30,10 @@ Note
 [谈谈android的硬件加速](http://blog.csdn.net/fishmai/article/details/52398498)
 
 [Android：WebView开发笔记（二）](http://blog.alexwan1989.com/2016/01/21/Android%EF%BC%9AWebView%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/)
+
+- IMMLeaks:
+
+【`InputMethodManager`内存泄漏】
+
+参考： [Android InputMethodManager 导致的内存泄露及解决方案](https://zhuanlan.zhihu.com/p/20828861?refer=zmywly8866)
+

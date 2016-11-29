@@ -8,9 +8,20 @@ import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * Created by bobomee on 2016/5/20.
+ *
+ * <pre>
+ *
+ *   1. 为了让webview点击link能够下载，需要添加 {@link android.webkit.DownloadListener}
+ *   2. WebView 重定向判断可以用 {@link android.webkit.WebView#getHitTestResult()}
+ *   3. HTTPS 页面中的 HTTP 元素不显示，如图片，可以用 {@link android.webkit.WebSettings#setMixedContentMode(int)}
+ *   4. Webview 开启硬件加速会出现各种坑，可以在 {@link WebViewClient#onPageStarted(android.webkit.WebView, java.lang.String, android.graphics.Bitmap)}中关闭硬件加速，在
+ *   {@link WebViewClient#onPageFinished(android.webkit.WebView, java.lang.String)}中开启硬件加速
+ *
+ * </pre>
  */
 public class WebViewUtil {
 
