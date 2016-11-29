@@ -89,8 +89,8 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
         Thread.sleep(3000);
       } catch (InterruptedException e) {
         Log.e(TAG, "error : ", e);
-        e.printStackTrace();
       }
+      LogUtil.e("",ex);
       //退出程序
       ActivityStack.INSTANCE.appExit();
     }
@@ -109,7 +109,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
     new Thread() {
       @Override public void run() {
         Looper.prepare();
-        throwable.printStackTrace();
+        LogUtil.e("",throwable);
         Looper.loop();
       }
     }.start();
@@ -164,10 +164,9 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
 
     Writer writer = new StringWriter();
     PrintWriter printWriter = new PrintWriter(writer);
-    ex.printStackTrace(printWriter);
+    LogUtil.e("",ex);
     Throwable cause = ex.getCause();
     while (cause != null) {
-      cause.printStackTrace(printWriter);
       cause = cause.getCause();
     }
     printWriter.close();
