@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+ext {
+  bintrayName = 'layout-annotation-annotation'
+
+  artifact = 'layout-annotation'
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

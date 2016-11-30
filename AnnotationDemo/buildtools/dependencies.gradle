@@ -1,0 +1,173 @@
+ext {
+
+  //packagename
+  applicationId = 'com.bobomee.android.annotationdemo'
+
+  //build tools
+  minSdk = 18
+  targetSdk = 24
+  buildToolsVersion = '24.0.2'
+  compileSdkVersion = 24
+
+  // Libraries
+  final supportLibVersion = '24.2.1'
+  final multidexVersion = '1.0.1'
+
+  // RxJava
+  rxjavaVersion = '1.1.0'
+  rxandroidVersion = '1.1.0'
+  rxPreferencesVersion = '1.0.1'
+  rxBindingVersion = '0.4.0'
+
+  // Inject
+  dagger2Version = '2.0'
+  butterknifeVersion = '8.0.1'
+  butterknifeCompilerVersion = '8.0.1'
+  javaxAnnotationVersion = '1.2'
+  jsr250Version = '1.0'
+  javaxInjectVersion = '1'
+
+
+
+  //auto dagger2
+  mortarVersion = '0.17'
+  flowVersion = '0.10'
+
+  autoDagger2Version = '1.1'
+  automortarVersion = '1.1'
+
+  //net
+  retrofitVersion = '2.0.2'
+  okhttpVersion = '3.2.0'
+  okhttpUtils = '2.5.2'
+  okioVersion = '1.6.0'
+
+  //pic
+  glideVersion = '3.7.0'
+  glideTransVersion = '2.0.0'
+
+  //sqlite
+  sqlbriteVersion = '0.5.0'
+
+  //tools
+  stethoVersion = '1.3.1'
+  databindingVersion = '1.0'
+  lombokVersion = '1.12.6'
+  stethoVersion = '1.4.1'
+  leakcanaryVersion = '1.5'
+
+  // log
+  timberVersion = '4.1.0'
+  loggerVersion = '1.12'
+
+  // ui
+  circleImageViewVersion = '2.0.0'
+  ptrVersion = '1.0.11'
+  overscrollVersion = '1.0.3'
+
+  // Test Libs
+  junitVersion = '4.12'
+  mockitoVersion = '1.10.19'
+  robolectricVersion = '3.0'
+  leakcanaryVersion = '1.5'
+  androidTesVersion = '0.5'
+  uiautomatorVersion = '2.1.2'
+
+  //event
+  eventbusVersion = '3.0.0'
+  commonVersion = '1.3.8'
+
+
+  //annotations
+  autoService = '1.0-rc2'
+  javapoet = '1.6.1'
+
+  //dependencies
+  supportDependencies = [appcompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
+                         design      : "com.android.support:design:${supportLibVersion}",
+                         recyclerview: "com.android.support:recyclerview-v7:${supportLibVersion}",
+                         cardView    : "com.android.support:cardview-v7:${supportLibVersion}",
+                         multidex    : "com.android.support:multidex:${multidexVersion}",]
+
+  httpDependencies = [retrofit            : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+                      converterGson       : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+                      adapterRxjava       : "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+
+                      glide               : "com.github.bumptech.glide:glide:${glideVersion}",
+                      glidetransformations: "jp.wasabeef:glide-transformations:${glideTransVersion}",
+
+                      okhttp              : "com.squareup.okhttp3:okhttp:${okhttpVersion}",
+                      loggingInterceptor  : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
+                      okhttputils         : "com.zhy:okhttputils:${okhttpUtils}",
+
+                      okio                : "com.squareup.okio:okio:${okioVersion}",]
+
+  injectDependencies = [butterknife        : "com.jakewharton:butterknife:${butterknifeVersion}",
+                        butterknifeCompiler: "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}",
+                        dagger             : "com.google.dagger:dagger:${dagger2Version}",
+                        daggerCompiler     : "com.google.dagger:dagger-compiler:${dagger2Version}",
+                        javaxAnnotation    : "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}",
+                        jsr250             : "javax.annotation:jsr250-api:${jsr250Version}",
+                        javaxInject        : "javax.inject:javax.inject:${javaxInjectVersion}",
+
+                        autodagger2        : "com.github.lukaspili.autodagger2:autodagger2:${autoDagger2Version}",
+                        autodagger2Compiler: "com.github.lukaspili.autodagger2:autodagger2-compiler:${autoDagger2Version}",
+                        automortar         : "com.github.lukaspili.automortar:automortar:${automortarVersion}",
+                        automortarCompiler : "com.github.lukaspili.automortar:automortar-compiler:${automortarVersion}",
+
+                        flow               : "com.squareup.flow:flow:${flowVersion}",
+                        flowPath           : "com.squareup.flow:flow-path:${flowVersion}",
+                        mortar             : "com.squareup.mortar:mortar:${mortarVersion}"
+
+  ]
+
+  rxDependencies = [rxjava       : "io.reactivex:rxjava:${rxjavaVersion}",
+                    rxandroid    : "io.reactivex:rxandroid:${rxjavaVersion}",
+                    rxPreferences: "com.f2prateek.rx.preferences:rx-preferences:${rxPreferencesVersion}",
+                    rxBinding    : "com.jakewharton.rxbinding:rxbinding:${rxBindingVersion}",]
+
+  utilDependencies = [sqlbrite        : "com.squareup.sqlbrite:sqlbrite:${sqlbriteVersion}",
+                      timber          : "com.jakewharton.timber:timber:${timberVersion}",
+                      logger          : "com.github.orhanobut:logger:${loggerVersion}",
+                      eventbus        : "org.greenrobot:eventbus:${eventbusVersion}",
+                      databinding     : "com.android.databinding:baseLibrary:${databindingVersion}",
+                      lombok          : "org.projectlombok:lombok:${lombokVersion}",
+                      stetho          : "com.facebook.stetho:stetho:${stethoVersion}",
+                      stethohttp      : "com.facebook.stetho:stetho-okhttp3:${stethoVersion}",
+                      debugleakcanary : "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}",
+                      relaseleakcanary: "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"]
+
+  uiWidgetDependencies = [circleImageView: "de.hdodenhof:circleimageview:${circleImageViewVersion}",
+                          ultraPtr       : "in.srain.cube:ultra-ptr:${ptrVersion}",
+                          overscroll     : "me.everything:overscroll-decor-android:${overscrollVersion}",]
+
+  domainTestDependencies = [junit      : "junit:junit:${junitVersion}",
+                            mockito    : "org.mockito:mockito-core:${mockitoVersion}",
+                            robolectric: "org.robolectric:robolectric:${robolectricVersion}",
+                            testRunner : "com.android.support.test:runner:${androidTesVersion}",
+                            testRules  : "com.android.support.test:rules:${androidTesVersion}",
+                            uiautomator: "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}",
+                            common     : "com.bobomee.android:common:${commonVersion}",]
+
+
+
+  annoDependencies = [autoService: "com.google.auto.service:auto-service:${autoService}",
+                      javapoet   : "com.squareup:javapoet:${javapoet}",
+
+  ]
+}
+
+afterEvaluate {
+  tasks.matching {
+    it.name.startsWith('dex')
+  }.each { dx ->
+    if (dx.additionalParameters == null) {
+      dx.additionalParameters = []
+    }
+    dx.additionalParameters += '--multi-dex' // enable multidex
+
+    // optional
+    dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString()
+    // enable the main-dex-list
+  }
+}

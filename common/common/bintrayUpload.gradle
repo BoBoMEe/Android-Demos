@@ -8,13 +8,13 @@ def projectGroupId = "com.bobomee.android"
 def projectArtifactId = "common"
 def projectVersionName = android.defaultConfig.versionName
 def projectPackaging = "aar"
-def projectSiteUrl = "https://github.com/BoBoMEe/AndroidDev/tree/common"
+def projectSiteUrl = "https://github.com/BoBoMEe/AndroidDev/tree/master/common"
 def projectGitUrl = "https://github.com/BoBoMEe/AndroidDev.git"
 def projectDesc = "A helpful library(develop tools) for Android"
 def projectIssueUrl = "https://github.com/BoBoMEe/AndroidDev/issues"
 
-def developerId = "bobomee"
-def developerName = "BoBoMEe"
+def developerId = "BoBoMEe"
+def developerName = "bobomee"
 def developerEmail = "wbwjx115@gmail.com"
 
 def bintrayUser = "bobomee"

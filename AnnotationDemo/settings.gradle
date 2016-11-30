@@ -1,0 +1,1 @@
+include ':app',':apt:annotations', ':apt:layout-compiler', ':apt:stub', ':apt:layout-api'

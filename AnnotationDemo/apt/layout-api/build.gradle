@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdk
+    targetSdkVersion rootProject.ext.targetSdk
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile supportDependencies.appcompat
+  androidTestCompile domainTestDependencies.testRunner
+  androidTestCompile domainTestDependencies.testRules
+  androidTestCompile domainTestDependencies.uiautomator
+
+  testCompile domainTestDependencies.junit
+  testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.robolectric
+  compile project(':apt:annotations')
+  provided project(':apt:stub')
+}
+
+configurations.all {
+  resolutionStrategy {
+    force 'com.android.support:support-annotations:23.1.1'
+  }
+}
+
+ext {
+  bintrayName = 'layout-annotation-api'
+
+  artifact = 'layout-api'
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

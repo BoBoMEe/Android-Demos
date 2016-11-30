@@ -1,0 +1,43 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: 'buildtools/dependencies.gradle'
+apply from: 'buildtools/version.gradle'
+apply from: 'gradle/bintrayUpload.gradle'
+
+
+def supportDependencies = rootProject.ext.supportDependencies
+def httpDependencies = rootProject.ext.httpDependencies
+def injectDependencies = rootProject.ext.injectDependencies
+def rxDependencies = rootProject.ext.rxDependencies
+def utilDependencies = rootProject.ext.utilDependencies
+def uiWidgetDependencies = rootProject.ext.uiWidgetDependencies
+def domainTestDependencies = rootProject.ext.domainTestDependencies
+def annoDependencies = rootProject.ext.annoDependencies
+
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.2.2'
+
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+  }
+}
+
+allprojects {
+  repositories {
+    jcenter()
+    maven {
+      url 'https://dl.bintray.com/bobomee/maven'
+    }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}

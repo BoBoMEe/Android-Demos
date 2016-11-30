@@ -1,0 +1,21 @@
+ext {
+
+  bintrayRepo = 'maven'
+  publishedGroupId = 'com.bobomee.android'
+  libraryName = 'LayoutAnnotation'
+  libraryDescription = 'Layout binding for Android views,Fragments,Activities.'
+
+  siteUrl = 'https://github.com/BoBoMEe/AndroidDev/tree/master/AnnotationDemo'
+  gitUrl = 'https://github.com/BoBoMEe/AndroidDev.git'
+
+  developerId = 'bobomee'
+  developerName = 'BoBoMEe'
+  developerEmail = 'wbwjx115@gmail.com'
+
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+
+  libraryVersion = '1.0.0'
+
+}

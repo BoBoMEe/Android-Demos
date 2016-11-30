@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor' // fixed butternife dagger2
+  }
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId rootProject.ext.applicationId
+    minSdkVersion rootProject.ext.minSdk
+    targetSdkVersion rootProject.ext.targetSdk
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  lintOptions {
+    checkReleaseBuilds false
+    abortOnError false
+    disable 'MissingTranslation'
+  }
+  dexOptions {
+    javaMaxHeapSize "8g"
+    jumboMode = true
+    preDexLibraries = false
+    threadCount = 8
+  }
+  signingConfigs {
+    debug {}
+    relealse {
+    }
+  }
+  buildTypes {
+    debug {
+      minifyEnabled false
+      zipAlignEnabled false
+      //instant run is not compatible with shrinkResources
+      shrinkResources false
+      signingConfig signingConfigs.debug
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    release {
+      minifyEnabled true
+      zipAlignEnabled true
+      //instant run is not compatible with shrinkResources
+      shrinkResources false
+      signingConfig signingConfigs.debug
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+}
+
+
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile injectDependencies.butterknife
+  apt injectDependencies.butterknifeCompiler
+  provided injectDependencies.jsr250
+  provided injectDependencies.javaxAnnotation
+  androidTestCompile domainTestDependencies.testRunner
+  androidTestCompile domainTestDependencies.testRules
+  androidTestCompile domainTestDependencies.uiautomator
+  testCompile domainTestDependencies.junit
+  testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.robolectric
+  compile project(':apt:layout-api')
+  apt project(':apt:layout-compiler')
+}
+
+
+configurations.all {
+  resolutionStrategy {
+    force 'com.android.support:support-annotations:23.1.1'
+  }
+}
