@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(':apt:annotations')
+  compile project(':apt:layout-annotation')
   compile annoDependencies.autoService
   compile annoDependencies.javapoet
 }

@@ -65,6 +65,12 @@ Command+Fn+F12
 
 Double shift： Search Everywhere
 
+## gradlew: Permission Denied
+
+> chmod +x gradlew
+
+
+
 参考
 
 [Android studio 上非常好用的快捷键](http://gold.xitu.io/entry/579973e4a633bd0060d905ff/promote?utm_source=baidu&utm_medium=keyword&utm_content=android_studio_key&utm_campaign=q3_search)
@@ -72,3 +78,5 @@ Double shift： Search Everywhere
 [【小技巧】AndroidStudio利用断点打印日志](http://www.jianshu.com/p/eb3d8674308a)
 
 [LEARN AND SUPPORT >> JetBrains](https://www.jetbrains.com/idea/documentation/)
+
+[gradlew: Permission Denied](http://stackoverflow.com/questions/17668265/gradlew-permission-denied)

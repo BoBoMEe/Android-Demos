@@ -38,5 +38,8 @@ Apache License  2.0
 
 ## publish
 
-> ./gradlew install --> ./gradlew :apt:layout-api:bintrayUpload
+> ./gradlew install --> ./gradlew :apt:layout-api:bintrayUpload 
+
 > ./gradlew install --> ./gradlew :apt:layout-compiler:bintrayUpload
+
+> ./gradlew install --> ./gradlew :apt:layout-annotation:bintrayUpload
