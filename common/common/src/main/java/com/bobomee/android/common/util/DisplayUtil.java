@@ -31,6 +31,9 @@ import android.view.WindowManager;
  */
 public class DisplayUtil {
 
+  private DisplayUtil() {
+  }
+
   public static int SCREEN_WIDTH_PIXELS;
   public static int SCREEN_HEIGHT_PIXELS;
   public static float SCREEN_DENSITY;

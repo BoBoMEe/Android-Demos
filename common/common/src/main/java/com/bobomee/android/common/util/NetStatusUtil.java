@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+
+import static com.bobomee.android.common.util.CrashHandlerUtil.TAG;
 
 /**
  * 获取网络状态链接
@@ -94,5 +97,29 @@ public class NetStatusUtil {
       }
     }
     return -1;
+  }
+  /**
+   * Returns details about the currently active default data network. When
+   * connected, this network is the default route for outgoing connections.
+   * You should always check {@link NetworkInfo#isConnected()} before initiating
+   * network traffic. This may return {@code null} when there is no default
+   * network.
+   *
+   * @param context Application context.
+   * @return a {@link NetworkInfo} object for the current default network
+   * or {@code null} if no network default network is currently active
+   * <p>
+   * <p>This method requires the call to hold the permission
+   * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
+   */
+  public static NetworkInfo getActiveNetworkInfo(Context context) {
+    try {
+      ConnectivityManager connMgr = (ConnectivityManager) context
+          .getSystemService(Context.CONNECTIVITY_SERVICE);
+      return connMgr.getActiveNetworkInfo();
+    } catch (Throwable e) {
+      Log.e(TAG, "fail to get active network info", e);
+      return null;
+    }
   }
 }

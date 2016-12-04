@@ -19,7 +19,10 @@
 package com.bobomee.android.common.util;
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -36,17 +39,168 @@ import java.io.FileOutputStream;
  */
 public class StorageUtil {
 
+    private StorageUtil() {
+        // static usage.
+    }
+
+    private final static int STATE_UNKNOWN = -1;
+    private final static int STATE_MOUNTED = 0;
+    private final static int STATE_MOUNTED_READ_ONLY = 1;
+    private final static int STATE_OTHERS = 2;
+    // ------------------------------ dir related -------------------------------
+    private final static Object sCacheDirLock = new Object();
+    private static int sMonitoredExternalState = STATE_UNKNOWN;
+    private final static Singleton<BroadcastReceiver, Void> sReceiver = new Singleton<BroadcastReceiver, Void>() {
+        @Override
+        protected BroadcastReceiver create(Void param) {
+            return new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    onStorageStateChanged();
+                }
+            };
+        }
+    };
+    private static volatile boolean sReceiverRegistered = false;
+
     /**
-     * Check if the primary "external" storage device is available.
+     * Whether external storage is readable.
      *
-     * @return
+     * @param context application context.
      */
-    public static boolean hasSDCardMounted() {
-        String state = Environment.getExternalStorageState();
-        if (state != null && state.equals(Environment.MEDIA_MOUNTED)) {
+    public static boolean isExternalReadable(Context context) {
+        return isExternalMounted(context) || isExternalMountedReadOnly(context);
+    }
+
+    /**
+     * Whether external storage is writable.
+     *
+     * @param context application context.
+     */
+    public static boolean isExternalWritable(Context context) {
+        return isExternalMounted(context);
+    }
+
+    /**
+     * Get the external storage capability.
+     *
+     * @return External storage capability.
+     */
+    public static long getExternalCapability() {
+        if (!isExternalReadable(null)) {
+            return -1;
+        }
+
+        File path = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long allBlocks = stat.getBlockCount();
+        return allBlocks * blockSize;
+    }
+
+    /**
+     * Get the external storage remaining space.
+     *
+     * @return External storage remaining space.
+     */
+    public static long getExternalRemaining() {
+        if (!isExternalReadable(null)) {
+            return -1;
+        }
+
+        File path = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long availableBlocks = stat.getAvailableBlocks();
+        return availableBlocks * blockSize;
+    }
+
+    private static boolean isExternalMounted(Context context) {
+        if (sMonitoredExternalState != STATE_UNKNOWN) {
+            return sMonitoredExternalState == STATE_MOUNTED;
+        }
+        int state = retrieveExternalStorageState();
+        if (registerReceiverIfNeeded(context)) {
+            // update state when register succeed.
+            sMonitoredExternalState = state;
+        }
+        return state == STATE_MOUNTED;
+    }
+
+    private static boolean isExternalMountedReadOnly(Context context) {
+        if (sMonitoredExternalState != STATE_UNKNOWN) {
+            return sMonitoredExternalState == STATE_MOUNTED_READ_ONLY;
+        }
+        int state = retrieveExternalStorageState();
+        if (registerReceiverIfNeeded(context)) {
+            // update state when register succeed.
+            sMonitoredExternalState = state;
+        }
+        return state == STATE_MOUNTED_READ_ONLY;
+    }
+
+    /**
+     * Get the internal storage remaining space.
+     *
+     * @return Internal storage remaining space.
+     */
+    public static long getInternalCapability() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long allBlocks = stat.getBlockCount();
+        return allBlocks * blockSize;
+    }
+
+    /**
+     * Get the internal storage capability.
+     *
+     * @return Internal storage capability.
+     */
+    public static long getInternalRemaining() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long availableBlocks = stat.getAvailableBlocks();
+        return availableBlocks * blockSize;
+    }
+
+    static void onStorageStateChanged() {
+        sMonitoredExternalState = retrieveExternalStorageState();
+    }
+
+    private static boolean registerReceiverIfNeeded(Context context) {
+        if (sReceiverRegistered) {
             return true;
-        } else {
+        }
+        if (context == null || context.getApplicationContext() == null) {
             return false;
+        }
+        synchronized (sReceiver) {
+            if (sReceiverRegistered) {
+                return true;
+            }
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL);
+            filter.addAction(Intent.ACTION_MEDIA_EJECT);
+            filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            filter.addAction(Intent.ACTION_MEDIA_REMOVED);
+            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            filter.addDataScheme("file");
+            context.getApplicationContext().registerReceiver(sReceiver.get(null), filter);
+            sReceiverRegistered = true;
+            return true;
+        }
+    }
+
+    private static int retrieveExternalStorageState() {
+        String externalState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(externalState)) {
+            return STATE_MOUNTED;
+        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(externalState)) {
+            return STATE_MOUNTED_READ_ONLY;
+        } else {
+            return STATE_OTHERS;
         }
     }
 
@@ -177,7 +331,7 @@ public class StorageUtil {
         File cacheDir = context.getCacheDir();
 
         //判断SD卡是否可用
-        if (hasSDCardMounted()) {
+        if (isExternalMounted(context)) {
 
             // 获取SD卡可用空间
             File externalCacheDir = getExternalCacheDir(context);
@@ -201,7 +355,7 @@ public class StorageUtil {
         File filesDir = context.getFilesDir();
 
         //判断SD卡是否可用
-        if (hasSDCardMounted()) {
+        if (isExternalMounted(context)) {
 
             // 获取SD卡可用空间
             File externalFilesDir = getExternalFilesDir(context);
@@ -283,4 +437,5 @@ public class StorageUtil {
     public static String getPublicDownloadDir() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
     }
+
 }

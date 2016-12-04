@@ -22,7 +22,6 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import com.bobomee.android.common.util.CrashHandlerUtil;
-import com.bobomee.android.common.manager.NetworkStatusManager;
 import com.bobomee.android.common.util.DisplayUtil;
 
 /**
@@ -49,8 +48,6 @@ public class BaseApplication extends Application {
 
         //屏幕初始化
         DisplayUtil.init(this);
-        //网络状态初始化
-        NetworkStatusManager.init(this);
 
         //异常捕获
         CrashHandlerUtil crashHandlerUtil = CrashHandlerUtil.getInstance();

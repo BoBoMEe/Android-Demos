@@ -218,4 +218,91 @@ public class FileUtil {
         File destFile = new File(destPath);
         return copyFile(srcFile, destFile, deleteSrc);
     }
+
+
+    /**
+     * 根据url生成一个合法的文件名（即去掉一些不能作为文件名的非法字符）
+     */
+    public static String makeFileNameFromUrl(String url) {
+
+        if (url == null) {
+            return null;
+        }
+        //要先从原url中把域名去掉
+        int start = url.indexOf("//");
+        start = start == -1 ? 0 : start;
+        start = url.indexOf('/', start + 2);
+        start = start == -1 ? 0 : start;
+        return url.substring(start).replaceAll("[^\\w\\-_]", "");//只保留部分字符
+    }
+
+    /**
+     * Comparator of files.
+     */
+    public interface FileComparator {
+        boolean equals(File lhs, File rhs);
+    }
+
+    /**
+     * Simple file comparator which only depends on file length and modification time.
+     */
+    public final static FileComparator SIMPLE_COMPARATOR = new FileComparator() {
+        @Override public boolean equals(File lhs, File rhs) {
+           return  (lhs.length() == rhs.length()) && (lhs.lastModified() == rhs.lastModified());
+        }
+    };
+
+    /**
+     * 获取真实的文件路径
+     *
+     * @param fileName fileName
+     * @return 真实的文件路径
+     */
+    public static String getCanonicalPath(String fileName) {
+        try {
+            return new File(fileName).getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
+    }
+
+    /**
+     * 文件最近修改时间
+     *
+     * @param path 文件路径
+     * @return 从1970年1月1日0点起，单位毫秒
+     */
+    public static long lastModified(String path) {
+        if (StringUtil.isEmpty(path)) {
+            return 0;
+        }
+        return new File(path).lastModified();
+    }
+
+    /**
+     * 重命名文件
+     *
+     * @param srcPath 原名
+     * @param dstPath 重命名后的文件名
+     * @return 成功为true
+     */
+    public static boolean rename(String srcPath, String dstPath) {
+        File file = new File(srcPath);
+        return file.isFile() && file.renameTo(new File(dstPath));
+    }
+
+    /**
+     * 合法化文件名
+     * 替换文件名不允许出现的字符，比如{}/\:*?"<>以及无效或者不可视Unicode字符
+     *
+     * @param fileName 被合法化的文件名
+     * @return 合法化后的文件名
+     */
+    public static String validateFileName(String fileName) {
+        // {} \ / : * ? " < > |
+        return fileName == null ? null : fileName.replaceAll("([{/\\\\:*?\"<>|}\\u0000-\\u001f\\uD7B0-\\uFFFF]+)", "");
+    }
+
+
 }

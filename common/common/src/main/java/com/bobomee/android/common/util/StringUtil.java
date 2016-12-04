@@ -29,8 +29,11 @@ import java.util.Random;
  */
 public class StringUtil {
 
-    public static boolean isEmpty(String s) {
-        return s == null || TextUtils.isEmpty(s);
+    private StringUtil() {
+    }
+
+    public static boolean isEmpty(String string) {
+        return string == null || string.trim().length() == 0;
     }
 
     //全部为空
@@ -130,4 +133,16 @@ public class StringUtil {
         }
         return true;
     }
+
+    /**
+     * 传入的字符串是否相等
+     *
+     * @param a a字符串
+     * @param b b字符串
+     * @return 如果字符串相等（值比较）返回true，否则返回false
+     */
+    public static boolean equal(String a, String b) {
+        return a == b || (a != null && b != null && a.length() == b.length() && a.equals(b));
+    }
+
 }
