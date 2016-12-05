@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
  *
@@ -14,18 +15,8 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.common.security;
+package com.bobomee.android.common.widget;
 
-import java.security.NoSuchAlgorithmException;
-
-/**
- * MD5摘要
- * <p/>
- * Created by zhaiyifan on 2015/8/3.
- */
-public final class SHA1 extends Digest {
-
-    public SHA1() throws NoSuchAlgorithmException {
-        super("SHA-1");
-    }
+public interface FragmentBackHandler {
+    boolean onBackPressed();
 }

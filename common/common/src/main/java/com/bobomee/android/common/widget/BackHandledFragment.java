@@ -14,18 +14,19 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.common.security;
+package com.bobomee.android.common.widget;
 
-import java.security.NoSuchAlgorithmException;
+import android.support.v4.app.Fragment;
 
-/**
- * MD5摘要
- * <p/>
- * Created by zhaiyifan on 2015/8/3.
- */
-public final class SHA1 extends Digest {
+public abstract class BackHandledFragment extends Fragment implements FragmentBackHandler {
+  public BackHandledFragment() {
+  }
 
-    public SHA1() throws NoSuchAlgorithmException {
-        super("SHA-1");
-    }
+  @Override public final boolean onBackPressed() {
+    return interceptBackPressed() || BackHandlerHelper.handleBackPress(this);
+  }
+
+  public boolean interceptBackPressed() {
+    return false;
+  }
 }
