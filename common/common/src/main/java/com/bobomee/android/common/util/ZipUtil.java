@@ -287,7 +287,7 @@ public class ZipUtil {
     } // end of while
     catch (IOException e) {
       e.printStackTrace();
-      FileUtil.deleteDirectory(outPathString);
+      FileUtil.deleteFolder(outPathString);
     } finally {
       IOUtil.closeQuietly(inZip);
     }

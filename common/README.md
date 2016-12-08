@@ -6,7 +6,7 @@ UsAge
 -----
 
 ```java
-compile 'com.bobomee.android:common:1.3.9'
+compile 'com.bobomee.android:common:1.4.1'
 ```
 
 
@@ -52,3 +52,9 @@ Note
 > 参考： [Android InputMethodManager 导致的内存泄露及解决方案](https://zhuanlan.zhihu.com/p/20828861?refer=zmywly8866)
 
 ....
+
+- BackHandledFragment： 
+
+**Fragment优雅的监听 `back` 事件**
+
+> 参考： [两步搞定Fragment的返回键](http://www.jianshu.com/p/fff1ef649fc0)

@@ -16,6 +16,10 @@
 
 package com.bobomee.android.common.util;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import java.io.File;
@@ -24,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -58,7 +61,6 @@ public class FileUtil {
         }
         return value;
     }
-
     /**
      * 删除单个文件
      *
@@ -76,7 +78,10 @@ public class FileUtil {
         return flag;
     }
 
-    public static boolean deleteDirectory(String sPath) {
+    /**
+     * 删除文件夹
+     */
+    public static boolean deleteFolder(String sPath) {
         //如果sPath不以文件分隔符结尾，自动添加文件分隔符
         if (!sPath.endsWith(File.separator)) {
             sPath = sPath + File.separator;
@@ -96,7 +101,7 @@ public class FileUtil {
                 if (!flag) break;
             } //删除子目录
             else {
-                flag = deleteDirectory(files[i].getAbsolutePath());
+                flag = deleteFolder(files[i].getAbsolutePath());
                 if (!flag) break;
             }
         }
@@ -108,24 +113,12 @@ public class FileUtil {
             return false;
         }
     }
-    public static void getAllFileNames(File file, ArrayList<String> arrayList) {
-        if (!file.exists()) {
-            return;
-        }
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File subFile : files)
-                    if (subFile.isDirectory())
-                        getAllFileNames(subFile, arrayList);
-                    else
-                        arrayList.add(subFile.getAbsolutePath());
-            }
-        } else {
-            arrayList.add(file.getAbsolutePath());
-        }
-    }
 
+    /**
+     * 复制文件夹
+     *
+     * @throws Exception
+     */
     public static boolean copyFolder(String oldPath, String newPath)
             throws Exception {
         boolean result = false;
@@ -198,17 +191,6 @@ public class FileUtil {
     }
 
     /**
-     * 创建文件夹
-     */
-    public static boolean createDirs(String dirPath) {
-        File file = new File(dirPath);
-        if (!file.exists() || !file.isDirectory()) {
-            return file.mkdirs();
-        }
-        return true;
-    }
-
-    /**
      * 复制文件，可以选择是否删除源文件
      */
     public static boolean copyFile(String srcPath, String destPath, boolean deleteSrc) {
@@ -232,6 +214,35 @@ public class FileUtil {
         start = url.indexOf('/', start + 2);
         start = start == -1 ? 0 : start;
         return url.substring(start).replaceAll("[^\\w\\-_]", "");//只保留部分字符
+    }
+
+    /**
+     * 从uri中获取文件名
+     */
+    public static String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf(File.separator);
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     /**
