@@ -28,4 +28,7 @@ dependencies {
   compile 'com.jakewharton:butterknife:8.2.1'
   apt 'com.jakewharton:butterknife-compiler:8.2.1'
   compile 'com.zhy:base-rvadapter:3.0.3'
+  compile ('com.bobomee.android:recyclerviewhelper:1.0.3'){
+    exclude group: 'com.android.support', module: 'recyclerview-v7'
+  }
 }

@@ -36,6 +36,8 @@
     <activity android:name=".factorymethod.FactoryMethodActivity"/>
     <activity android:name=".abstactfactory.AbstractFactoryActivity"/>
     <activity android:name=".interpreter.InterpreterActivity"/>
+    <activity android:name=".singleton.SingletonActivity"/>
+    <activity android:name=".builder.BuilderActivity"/>
   </application>
 
 </manifest>
