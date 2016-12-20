@@ -3,18 +3,28 @@ chrome美化与插件
 
 ## gtd
 Momentum:背景大图
+
 关灯看视频: 背景变暗
+
 raindrop: 书签
+
 划词翻译
+
 印象笔记
-todoist
+
+todoist | TickTick
+
 gmail
 
 ## code
 adblock
+
 xmltree
+
 jsonview
+
 GitHub Awesome Complete | github 搜索
+
 octotree: github
 
 
@@ -33,6 +43,8 @@ dash : api文档
 smartfinder : mac Android
 
 HomeBrew： install
+
+zip : entropy | 
 
 ## gtd
 
