@@ -5,8 +5,8 @@ Android 开发中个人常用工具类整理,慢慢增加中..
 UsAge
 -----
 
-```java
-compile 'com.bobomee.android:common:1.4.2'
+```groovy
+compile 'com.bobomee.android:common:1.4.5
 ```
 
 
@@ -62,3 +62,8 @@ Note
 - CommonAdapter
 
 > Thanks to [tianzhijiexian/CommonAdapter](https://github.com/tianzhijiexian/CommonAdapter)
+
+- Utils
+
+> Build.VERSION_CODES :such as hasHoneycomb,hasIceCreamSandwich...
+> InputMethodManager : hide and show

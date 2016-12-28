@@ -16,14 +16,11 @@
 
 package com.bobomee.android.common.util;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import java.io.File;
@@ -36,49 +33,27 @@ import java.io.File;
  */
 public class IntentUtil {
 
-  /**
-   * 跳转拨号盘,需要权限
-   * @param context
-   * @param phoneNo
-   */
-  public static void actionDial(Context context, String phoneNo) {
-    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
-    intent.setAction(Intent.ACTION_DIAL);// 拨号盘
-    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
-        != PackageManager.PERMISSION_GRANTED) {
-      // TODO: Consider calling
-      //    ActivityCompat#requestPermissions
-      // here to request the missing permissions, and then overriding
-      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-      //                                          int[] grantResults)
-      // to handle the case where the user grants the permission. See the documentation
-      // for ActivityCompat#requestPermissions for more details.
-      return;
-    }
-    context.startActivity(intent);
-  }
-
-  /**
-   * 不跳转到拨号盘,直接拨打电话
-   * @param context
-   * @param phoneNo
-   */
-  public static void actionCall(Context context, String phoneNo) {
-    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
-    intent.setAction(Intent.ACTION_CALL);// 直接拨号
-    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
-        != PackageManager.PERMISSION_GRANTED) {
-      // TODO: Consider calling
-      //    ActivityCompat#requestPermissions
-      // here to request the missing permissions, and then overriding
-      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-      //                                          int[] grantResults)
-      // to handle the case where the user grants the permission. See the documentation
-      // for ActivityCompat#requestPermissions for more details.
-      return;
-    }
-    context.startActivity(intent);
-  }
+  ///**
+  // * 跳转拨号盘,需要权限
+  // * @param context
+  // * @param phoneNo
+  // */
+  //public static void actionDial(Context context, String phoneNo) {
+  //  Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
+  //  intent.setAction(Intent.ACTION_DIAL);// 拨号盘
+  //  context.startActivity(intent);
+  //}
+  //
+  ///**
+  // * 不跳转到拨号盘,直接拨打电话
+  // * @param context
+  // * @param phoneNo
+  // */
+  //public static void actionCall(Context context, String phoneNo) {
+  //  Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
+  //  intent.setAction(Intent.ACTION_CALL);// 直接拨号
+  //  context.startActivity(intent);
+  //}
 
   private IntentUtil() {
   }
