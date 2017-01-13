@@ -19,18 +19,27 @@ package com.bobomee.android.mvp.splash;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 import com.bobomee.android.common.util.ToastUtil;
 import com.bobomee.android.mvp.BaseFragment;
 import com.bobomee.android.mvp.R;
 import com.bobomee.android.mvp.list.ReposActivity;
 
+import static butterknife.OnTextChanged.Callback.AFTER_TEXT_CHANGED;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -42,6 +51,7 @@ public class SplashFragment extends BaseFragment implements SplashContract.View 
 
   @BindView(R.id.user) EditText user;
   @BindView(R.id.progress) ProgressBar progress;
+  @BindView(R.id.start) ImageButton mStart;
   private SplashContract.Presenter presenter;
 
   public SplashFragment() {
@@ -56,6 +66,20 @@ public class SplashFragment extends BaseFragment implements SplashContract.View 
 
   @OnClick(R.id.start) public void start() {
     presenter.repos(user.getText().toString().trim());
+  }
+
+  @OnTextChanged(value = R.id.user, callback = AFTER_TEXT_CHANGED)
+  public void onAfterTextChanged(Editable s) {
+    mStart.setVisibility(user.getText().length() > 0 ? View.VISIBLE : View.GONE);
+  }
+
+  @OnEditorAction(R.id.user)
+  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+      presenter.repos(user.getText().toString());
+      return true;
+    }
+    return false;
   }
 
   @Override public View initFragmentView(LayoutInflater inflater, ViewGroup container,
@@ -87,5 +111,13 @@ public class SplashFragment extends BaseFragment implements SplashContract.View 
   @Override public void onDestroyView() {
     super.onDestroyView();
     presenter.onDestroy();
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    // TODO: inflate a fragment view
+    View rootView = super.onCreateView(inflater, container, savedInstanceState);
+    ButterKnife.bind(this, rootView);
+    return rootView;
   }
 }

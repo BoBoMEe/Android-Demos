@@ -16,34 +16,84 @@
   ~    limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     >
 
 
-  <EditText
-      android:id="@+id/user"
+  <RelativeLayout
+      android:id="@+id/layout_search"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:text="BoBoMEe"
-      />
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:animateLayoutChanges="true"
+      android:background="?attr/colorPrimary"
+      android:paddingBottom="20dp"
+      android:paddingLeft="@dimen/vertical_margin"
+      android:paddingRight="@dimen/vertical_margin"
+      android:paddingTop="10dp"
+      >
 
-  <Button
-      android:id="@+id/start"
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:text="start"
-      />
+    <ImageButton
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_search_white_36dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
+    <EditText
+        android:text="@string/repo_user"
+        android:id="@+id/user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/start"
+        android:hint="@string/hit_username"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:theme="@style/LightEditText"
+        />
+
+  </RelativeLayout>
+
+  <TextView
+      android:id="@+id/text_info"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/layout_search"
+      android:layout_centerHorizontal="true"
+      android:layout_marginLeft="@dimen/vertical_margin"
+      android:layout_marginRight="@dimen/vertical_margin"
+      android:layout_marginTop="20dp"
+      android:gravity="center"
+      android:text="@string/default_info_message"
+      android:textColor="@color/secondary_text"
+      android:textSize="18sp"
+      />
 
   <ProgressBar
+      android:layout_centerInParent="true"
       android:id="@+id/progress"
       android:layout_width="50dp"
       android:layout_height="50dp"
       android:layout_marginTop="50dp"
       />
 
-</LinearLayout>
+  <ImageView
+      android:layout_width="110dp"
+      android:layout_height="110dp"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:src="@drawable/octocat"
+      />
+
+</RelativeLayout>

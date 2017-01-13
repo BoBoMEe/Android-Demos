@@ -41,7 +41,7 @@ public class RepoDataSource implements DataSource {
   /**
    * repo cache ,key = name,value = repos
    */
-  Map<String, List<Repo>> mCache;
+  private Map<String, List<Repo>> mCache;
 
   public RepoDataSource(@NonNull DataSource mLocalSource, @NonNull DataSource mRemoteSource) {
     this.mLocalSource = checkNotNull(mLocalSource);
@@ -86,13 +86,13 @@ public class RepoDataSource implements DataSource {
       }
 
       @Override public void onDataLoaded(List<Repo> repos) {
-        refreshCache(name, repos);
+        refresh(name, repos);
         loadCallBack.onDataLoaded(repos);
       }
     });
   }
 
-  @Override public void refreshCache() {
+  public void refreshCache() {
     if (null == mCache) return;
     mCache.clear();
   }
@@ -109,7 +109,7 @@ public class RepoDataSource implements DataSource {
     mRemoteSource.saveRepos(repos);
   }
 
-  private void refreshCache(String name, List<Repo> repos) {
+  private void refresh(String name, List<Repo> repos) {
     if (null == mCache) {
       mCache = new LinkedHashMap<>();
     }
@@ -124,7 +124,7 @@ public class RepoDataSource implements DataSource {
       }
 
       @Override public void onDataLoaded(List<Repo> repos) {
-        refreshCache(name, repos);
+        refresh(name, repos);
         saveRepos(repos);
         loadCallBack.onDataLoaded(repos);
       }
