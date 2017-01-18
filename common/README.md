@@ -67,3 +67,8 @@ Note
 
 > Build.VERSION_CODES :such as hasHoneycomb,hasIceCreamSandwich...
 > InputMethodManager : hide and show
+> ViewFindUtils:
+> ViewUtil
+
+- ScreenUtil: 截屏,包括 Listview,ScrollView,RecyclerView
+使用 Demo: [ScreenShotActivity.java](https://github.com/BoBoMEe/AndroidDev/blob/master/blogcodes/app/src/main/java/com/bobomee/blogdemos/tools/ScreenShotActivity.java)

@@ -18,22 +18,27 @@ package com.bobomee.android.common.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.TextUtils;
+import android.support.v4.util.LruCache;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 获取屏幕的宽高度
@@ -42,287 +47,240 @@ import java.io.IOException;
  */
 public class ScreenUtil {
 
-    /**
-     * shot the current screen ,with the status but the status is trans *
-     *
-     * @param ctx current activity
-     */
-    public static Bitmap shotScreen(Activity ctx) {
+  /**
+   * shot the current screen ,with the status but the status is trans *
+   *
+   * @param ctx current activity
+   */
+  public static Bitmap shotActivity(Activity ctx) {
 
-        View view = ctx.getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
+    View view = ctx.getWindow().getDecorView();
+    view.setDrawingCacheEnabled(true);
+    view.buildDrawingCache();
 
-        Bitmap bp = Bitmap.createBitmap(view.getDrawingCache(), 0, 0, getScreenW(ctx), getScreenH(ctx));
+    Bitmap bp = Bitmap.createBitmap(view.getDrawingCache(), 0, 0, view.getMeasuredWidth(),
+        view.getMeasuredHeight());
 
-        view.setDrawingCacheEnabled(false);
-        view.destroyDrawingCache();
+    view.setDrawingCacheEnabled(false);
+    view.destroyDrawingCache();
 
-        return bp;
+    return bp;
+  }
+
+  /**
+   * shot the current screen ,with the status and navigationbar*
+   */
+  public static Bitmap ShotActivity$WithoutStatus$WithoutNavigationBar(Activity ctx) {
+    int statusH = getStatusH(ctx);
+    int navigationBarH = getNavigationBarHeight(ctx);
+
+    View view = ctx.getWindow().getDecorView();
+    view.setDrawingCacheEnabled(true);
+    view.buildDrawingCache();
+
+    Bitmap bp = Bitmap.createBitmap(view.getDrawingCache(), 0, statusH, view.getMeasuredWidth(),
+        view.getMeasuredHeight() - statusH - navigationBarH);
+
+    view.setDrawingCacheEnabled(false);
+    view.destroyDrawingCache();
+
+    return bp;
+  }
+
+  /**
+   * 获得屏幕高度
+   */
+  public static int getScreenWidth(Context context) {
+    WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    DisplayMetrics outMetrics = new DisplayMetrics();
+    wm.getDefaultDisplay().getMetrics(outMetrics);
+    return outMetrics.widthPixels;
+  }
+
+  /**
+   * get the height of screen *
+   */
+  public static int getScreenH(Context ctx) {
+    int h = 0;
+    if (Build.VERSION.SDK_INT > 13) {
+      Point p = new Point();
+      ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(p);
+      h = p.y;
+    } else {
+      h = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+          .getHeight();
+    }
+    return h;
+  }
+
+  /**
+   * get the width of screen **
+   */
+  public static int getScreenW(Context ctx) {
+    int w = 0;
+    if (Build.VERSION.SDK_INT > 13) {
+      Point p = new Point();
+      ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(p);
+      w = p.x;
+    } else {
+      w = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+          .getWidth();
+    }
+    return w;
+  }
+
+  /**
+   * get the height of status *
+   */
+  public static int getStatusH(Activity ctx) {
+    Rect s = new Rect();
+    ctx.getWindow().getDecorView().getWindowVisibleDisplayFrame(s);
+    return s.top;
+  }
+
+  /**
+   * get the height of status *
+   */
+  public static int getStatusHeight(Context activity) {
+    int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    return resourceId > 0 ? activity.getResources().getDimensionPixelSize(resourceId) : 0;
+  }
+
+  /**
+   * get the height of status *
+   */
+  public static int getStatusH(Context ctx) {
+    int statusHeight = -1;
+    try {
+      Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+      Object object = clazz.newInstance();
+      int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
+      statusHeight = ctx.getResources().getDimensionPixelSize(height);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return statusHeight;
+  }
+
+  /**
+   * get the height of title *
+   */
+  public static int getTitleH(Activity ctx) {
+    int contentTop = ctx.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+    return contentTop - getStatusH(ctx);
+  }
+
+  /**
+   * get the height of NavigationBar
+   */
+
+  public static int getNavigationBarHeight(Activity mActivity) {
+    Resources resources = mActivity.getResources();
+    int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+    int height = resources.getDimensionPixelSize(resourceId);
+    return height;
+  }
+
+  public static Bitmap shotListView(ListView listview) {
+
+    ListAdapter adapter = listview.getAdapter();
+    int itemscount = adapter.getCount();
+    int allitemsheight = 0;
+    List<Bitmap> bmps = new ArrayList<Bitmap>();
+
+    for (int i = 0; i < itemscount; i++) {
+
+      View childView = adapter.getView(i, null, listview);
+      childView.measure(
+          View.MeasureSpec.makeMeasureSpec(listview.getWidth(), View.MeasureSpec.EXACTLY),
+          View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+      childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
+      childView.setDrawingCacheEnabled(true);
+      childView.buildDrawingCache();
+      bmps.add(childView.getDrawingCache());
+      allitemsheight += childView.getMeasuredHeight();
     }
 
-    /**
-     * 获得屏幕高度
-     *
-     * @param context
-     * @return
-     */
-    public static int getScreenWidth(Context context)
-    {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
+    Bitmap bigbitmap =
+        Bitmap.createBitmap(listview.getMeasuredWidth(), allitemsheight, Bitmap.Config.ARGB_8888);
+    Canvas bigcanvas = new Canvas(bigbitmap);
+
+    Paint paint = new Paint();
+    int iHeight = 0;
+
+    for (int i = 0; i < bmps.size(); i++) {
+      Bitmap bmp = bmps.get(i);
+      bigcanvas.drawBitmap(bmp, 0, iHeight, paint);
+      iHeight += bmp.getHeight();
+
+      bmp.recycle();
+      bmp = null;
     }
 
+    return bigbitmap;
+  }
 
-    /**
-     * shot the current screen ,with the status *
-     */
-    public static Bitmap ShotWithoutStatus(Activity ctx) {
-        int statusH = getStatusH(ctx);
+  public static Bitmap shotRecyclerView(RecyclerView view) {
+    RecyclerView.Adapter adapter = view.getAdapter();
+    Bitmap bigBitmap = null;
+    if (adapter != null) {
+      int size = adapter.getItemCount();
+      int height = 0;
+      Paint paint = new Paint();
+      int iHeight = 0;
+      final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
-        View view = ctx.getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
+      // Use 1/8th of the available memory for this memory cache.
+      final int cacheSize = maxMemory / 8;
+      LruCache<String, Bitmap> bitmaCache = new LruCache<>(cacheSize);
+      for (int i = 0; i < size; i++) {
+        RecyclerView.ViewHolder holder = adapter.createViewHolder(view, adapter.getItemViewType(i));
+        adapter.onBindViewHolder(holder, i);
+        holder.itemView.measure(
+            View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        holder.itemView.layout(0, 0, holder.itemView.getMeasuredWidth(),
+            holder.itemView.getMeasuredHeight());
+        holder.itemView.setDrawingCacheEnabled(true);
+        holder.itemView.buildDrawingCache();
+        Bitmap drawingCache = holder.itemView.getDrawingCache();
+        if (drawingCache != null) {
 
-        Bitmap bp = Bitmap.createBitmap(view.getDrawingCache(), 0, statusH, getScreenW(ctx), getScreenH(ctx) - statusH);
-
-        view.setDrawingCacheEnabled(false);
-        view.destroyDrawingCache();
-
-        return bp;
-
-    }
-
-    /**
-     * get the height of screen *
-     */
-    public static int getScreenH(Context ctx) {
-        int h = 0;
-        if (Build.VERSION.SDK_INT > 13) {
-            Point p = new Point();
-            ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE))
-                    .getDefaultDisplay().getSize(p);
-            h = p.y;
-        } else {
-            h = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE))
-                    .getDefaultDisplay().getHeight();
+          bitmaCache.put(String.valueOf(i), drawingCache);
         }
-        return h;
+        height += holder.itemView.getMeasuredHeight();
+      }
+
+      bigBitmap = Bitmap.createBitmap(view.getMeasuredWidth(), height, Bitmap.Config.ARGB_8888);
+      Canvas bigCanvas = new Canvas(bigBitmap);
+      Drawable lBackground = view.getBackground();
+      if (lBackground instanceof ColorDrawable) {
+        ColorDrawable lColorDrawable = (ColorDrawable) lBackground;
+        int lColor = lColorDrawable.getColor();
+        bigCanvas.drawColor(lColor);
+      }
+
+      for (int i = 0; i < size; i++) {
+        Bitmap bitmap = bitmaCache.get(String.valueOf(i));
+        bigCanvas.drawBitmap(bitmap, 0f, iHeight, paint);
+        iHeight += bitmap.getHeight();
+        bitmap.recycle();
+      }
     }
+    return bigBitmap;
+  }
 
-    /**
-     * get the width of screen **
-     */
-    public static int getScreenW(Context ctx) {
-        int w = 0;
-        if (Build.VERSION.SDK_INT > 13) {
-            Point p = new Point();
-            ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE))
-                    .getDefaultDisplay().getSize(p);
-            w = p.x;
-        } else {
-            w = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE))
-                    .getDefaultDisplay().getWidth();
-        }
-        return w;
+  public static Bitmap shotScrollView(ScrollView scrollView) {
+    int h = 0;
+    Bitmap bitmap = null;
+    for (int i = 0; i < scrollView.getChildCount(); i++) {
+      h += scrollView.getChildAt(i).getHeight();
+      scrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
     }
-
-    /**
-     * get the height of status *
-     */
-    public static int getStatusH(Activity ctx) {
-        Rect s = new Rect();
-        ctx.getWindow().getDecorView().getWindowVisibleDisplayFrame(s);
-        return s.top;
-    }
-
-    /**
-     * get the height of status *
-     */
-    public static int getStatusHeight(Context activity) {
-        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        return resourceId > 0 ? activity.getResources().getDimensionPixelSize(resourceId) : 0;
-    }
-
-    /**
-     * get the height of status *
-     */
-    public static int getStatusH(Context ctx) {
-        int statusHeight = -1;
-        try {
-            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
-            Object object = clazz.newInstance();
-            int height = Integer.parseInt(clazz.getField("status_bar_height")
-                    .get(object).toString());
-            statusHeight = ctx.getResources().getDimensionPixelSize(height);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return statusHeight;
-    }
-
-    /**
-     * get the height of title *
-     */
-    public static int getTitleH(Activity ctx) {
-        int contentTop = ctx.getWindow()
-                .findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        return contentTop - getStatusH(ctx);
-    }
-
-    /**
-     * save pic to sdcard
-     */
-    public static void savePic(Bitmap b, String filePath) {
-        if (null != b && !TextUtils.isEmpty(filePath)) {
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(filePath);
-                b.compress(Bitmap.CompressFormat.PNG, 60, fos);
-                fos.flush();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } finally {
-                IOUtil.closeQuietly(fos);
-            }
-        }
-    }
-
-    /**
-     * convert the View to a bitmap *
-     */
-    public static Bitmap getViewBitmap(View v){
-        v.setDrawingCacheEnabled(true);
-        v.buildDrawingCache();
-
-        Bitmap bp = ScreenUtil.getViewBp(v);
-
-        v.setDrawingCacheEnabled(false);
-        v.destroyDrawingCache();
-
-        return bp;
-    }
-
-
-    private static Bitmap getViewBp(View v) {
-        if (null == v) {
-            return null;
-        }
-        if (Build.VERSION.SDK_INT >= 11) {
-            v.measure(MeasureSpec.makeMeasureSpec(v.getWidth(),
-                    MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-                    v.getHeight(), MeasureSpec.EXACTLY));
-            v.layout((int) v.getX(), (int) v.getY(),
-                    (int) v.getX() + v.getMeasuredWidth(),
-                    (int) v.getY() + v.getMeasuredHeight());
-        } else {
-            v.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-        }
-        Bitmap b = Bitmap.createBitmap(v.getDrawingCache(), 0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-
-        return b;
-    }
-
-    private static Bitmap getViewBpWithoutBottom(View v) {
-        if (null == v) {
-            return null;
-        }
-        if (Build.VERSION.SDK_INT >= 11) {
-            v.measure(MeasureSpec.makeMeasureSpec(v.getWidth(),
-                    MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-                    v.getHeight(), MeasureSpec.EXACTLY));
-
-            v.layout((int) v.getX(), (int) v.getY(),
-                    (int) v.getX() + v.getMeasuredWidth(),
-                    (int) v.getY() + v.getMeasuredHeight());
-        } else {
-            v.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-        }
-
-        Bitmap bp = Bitmap.createBitmap(v.getDrawingCache(), 0, 0, v.getMeasuredWidth(),
-                v.getMeasuredHeight() - v.getPaddingBottom());
-
-        return bp;
-    }
-
-    /**
-     * get the bitmap of a scrollView *
-     */
-    public static Bitmap getViewBitmap(Context ctx, ScrollView sv) {
-        if (null == sv) {
-            return null;
-        }
-        // enable something
-        sv.setVerticalScrollBarEnabled(false);
-        sv.setVerticalFadingEdgeEnabled(false);
-        sv.scrollTo(0, 0);
-        sv.setDrawingCacheEnabled(true);
-        sv.buildDrawingCache(true);
-        Bitmap b = getViewBpWithoutBottom(sv);
-
-        /**
-         * vh : the height of the scrollView that is visible <BR>
-         * th : the total height of the scrollView <BR>
-         **/
-        int vh = sv.getHeight();// 1230
-        int th = sv.getChildAt(0).getHeight();// 2560
-
-        /** the total height is more than one screen */
-        if (th > vh) {
-            int w = getScreenW(ctx);
-            int absVh = vh - sv.getPaddingTop() - sv.getPaddingBottom();
-            do {
-                int restHeight = th - vh;
-                Bitmap temp = null;
-                if (restHeight <= absVh) {
-                    sv.scrollBy(0, restHeight);
-                    vh += restHeight;
-                    temp = getViewBp(sv);
-                } else {
-                    sv.scrollBy(0, absVh);
-                    vh += absVh;
-                    temp = getViewBpWithoutBottom(sv);
-                }
-                b = mergeBitmap(vh, w, temp, 0, sv.getScrollY(), b, 0, 0);
-            } while (vh < th);
-        }
-
-        // restore somthing
-        sv.scrollTo(0, 0);
-        sv.setVerticalScrollBarEnabled(true);
-        sv.setVerticalFadingEdgeEnabled(true);
-        sv.setDrawingCacheEnabled(false);
-        sv.destroyDrawingCache();
-        return b;
-    }
-
-    public static Bitmap mergeBitmap(int newImageH, int newIamgeW,
-                                     Bitmap background, float backX, float backY, Bitmap foreground,
-                                     float foreX, float foreY) {
-        if (null == background || null == foreground) {
-            return null;
-        }
-        // create the new blank bitmap 创建一个新的和SRC长度宽度一样的位图
-        Bitmap newbmp = Bitmap.createBitmap(newIamgeW, newImageH,
-                Config.RGB_565);
-        Canvas cv = new Canvas(newbmp);
-        // draw bg into
-        cv.drawBitmap(background, backX, backY, null);
-        // draw fg into
-        cv.drawBitmap(foreground, foreX, foreY, null);
-        // save all clip
-        cv.save(Canvas.ALL_SAVE_FLAG);// 保存
-        // store
-        cv.restore();// 存储
-
-        return newbmp;
-    }
-
+    bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
+    final Canvas canvas = new Canvas(bitmap);
+    scrollView.draw(canvas);
+    return bitmap;
+  }
 }
