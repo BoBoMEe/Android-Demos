@@ -181,6 +181,9 @@ public class ScreenUtil {
     return height;
   }
 
+  /**
+   * http://stackoverflow.com/questions/12742343/android-get-screenshot-of-all-listview-items
+   */
   public static Bitmap shotListView(ListView listview) {
 
     ListAdapter adapter = listview.getAdapter();
@@ -221,6 +224,9 @@ public class ScreenUtil {
     return bigbitmap;
   }
 
+  /**
+   * https://gist.github.com/PrashamTrivedi/809d2541776c8c141d9a
+   */
   public static Bitmap shotRecyclerView(RecyclerView view) {
     RecyclerView.Adapter adapter = view.getAdapter();
     Bitmap bigBitmap = null;
@@ -271,6 +277,9 @@ public class ScreenUtil {
     return bigBitmap;
   }
 
+  /**
+   * http://blog.csdn.net/lyy1104/article/details/40048329
+   */
   public static Bitmap shotScrollView(ScrollView scrollView) {
     int h = 0;
     Bitmap bitmap = null;
@@ -282,5 +291,16 @@ public class ScreenUtil {
     final Canvas canvas = new Canvas(bitmap);
     scrollView.draw(canvas);
     return bitmap;
+  }
+
+  /**
+   * http://stackoverflow.com/questions/9791714/take-a-screenshot-of-a-whole-view
+   */
+  public static Bitmap shotView(View v, int width, int height) {
+    Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    Canvas c = new Canvas(b);
+    v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
+    v.draw(c);
+    return b;
   }
 }
