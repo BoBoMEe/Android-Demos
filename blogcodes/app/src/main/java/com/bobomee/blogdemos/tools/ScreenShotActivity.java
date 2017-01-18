@@ -1,42 +1,46 @@
 package com.bobomee.blogdemos.tools;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ScrollView;
-
-import com.bobomee.android.common.util.ScreenUtil;
+import android.widget.Button;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.bobomee.blogdemos.R;
 import com.bobomee.blogdemos.base.BaseActivity;
-
 
 /**
  * @author：BoBoMEe Created at 2016/1/5.
  */
 public class ScreenShotActivity extends BaseActivity {
 
-    private ScrollView root;
+    private android.widget.Button shotlist;
+    private android.widget.Button shotrecycler;
+    private android.widget.Button shotscroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_shot_layout);
-        root = (ScrollView) findViewById(R.id.root);
-
+        ButterKnife.bind(this);
+        this.shotscroll = (Button) findViewById(R.id.shot_scroll);
+        this.shotrecycler = (Button) findViewById(R.id.shot_recycler);
+        this.shotlist = (Button) findViewById(R.id.shot_list);
     }
 
-    public void click(View v){
-        Bitmap bitmap = ScreenUtil.getViewBitmap(ScreenShotActivity.this, root);
-        showDialog(bitmap);
+    @OnClick(R.id.shot_scroll) void scroll() {
+        start(ScrollViwShotActivity.class);
     }
 
-    private void showDialog(Bitmap b){
-        ImageView v = new ImageView(ScreenShotActivity.this);
-        v.setImageBitmap(b);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ScreenShotActivity.this).setView(v);
-        builder.create().show();
+    @OnClick(R.id.shot_list) void list() {
+        start(ListViewShotActivity.class);
     }
 
+    @OnClick(R.id.shot_recycler) void onClick() {
+        start(RecyclerViewShotActivity.class);
+    }
+
+    private void start(Class a) {
+        Intent intent = new Intent(this, a);
+        startActivity(intent);
+    }
 }

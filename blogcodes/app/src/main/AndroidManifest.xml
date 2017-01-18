@@ -44,7 +44,10 @@
         <activity android:name=".recycler.BaseRecycler"/>
         <activity android:name=".scroll.View_st_sb"/>
         <activity android:name=".activityfragment.ActivityFragment"/>
-
+        <activity android:name=".tools.ListViewShotActivity"
+            />
+        <activity android:name=".tools.RecyclerViewShotActivity"/>
+        <activity android:name=".tools.ScrollViwShotActivity"/>
     </application>
 
 </manifest>

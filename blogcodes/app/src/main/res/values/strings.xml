@@ -40,4 +40,7 @@
     <string name="sort_string">Sort</string>
     <string name="add_string">Add</string>
     <string name="delete_string">Delete</string>
+    <string name="shot_listview">ListView截屏</string>
+    <string name="shot_recyclerview">Recyclerview截屏</string>
+    <string name="shot_scrollview">ScrollView截屏</string>
 </resources>
