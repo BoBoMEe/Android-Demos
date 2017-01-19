@@ -1,4 +1,4 @@
-package com.bobomee.android.retrofit2demo.client;
+package com.bobomee.android.htttp.okhttp;
 
 import com.bobomee.android.htttp.okhttp.interceptor.OfflineCacheControlInterceptor;
 import com.bobomee.android.htttp.util.CacheUtil;

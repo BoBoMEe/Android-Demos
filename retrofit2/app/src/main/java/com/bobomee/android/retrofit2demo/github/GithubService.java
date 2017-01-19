@@ -1,6 +1,6 @@
 package com.bobomee.android.retrofit2demo.github;
 
-import com.bobomee.android.retrofit2demo.client.Retrofit2Client;
+import com.bobomee.android.htttp.retrofit2.Retrofit2Client;
 
 public enum GithubService {
     INSTANCE;
