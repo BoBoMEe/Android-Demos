@@ -10,3 +10,4 @@ Android_WebView_Reference
 - [WebView](https://developer.android.google.cn/reference/android/webkit/WebView.html)
 - [ Android WebView(一) WebView详解  ](http://blog.csdn.net/zxw136511485/article/details/50523298)
 - [ Android WebView(二) WebView常用API详解](http://blog.csdn.net/zxw136511485/article/details/50546601)
+- [Chrome custom tabs：在浏览器与本地应用之间流畅的切换](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0914/3449.html)

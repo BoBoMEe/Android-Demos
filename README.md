@@ -17,4 +17,4 @@ Android Develop Demos
 - note ：开发中的一些碎片整理
 - ProviderTutorial ： ContentProvider学习之旅
 - retrofit2 : 网络库 Retrofit2 使用与封装
-- Android_WebView_Reference WebView播放视屏，全屏方案
+- Android_WebView_Reference :  WebView播放视屏，全屏方案
