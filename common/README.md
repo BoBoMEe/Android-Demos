@@ -6,7 +6,7 @@ UsAge
 -----
 
 ```groovy
-compile 'com.bobomee.android:common:1.4.9`
+compile 'com.bobomee.android:common:1.4.9'
 ```
 
 
