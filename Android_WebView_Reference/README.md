@@ -1,7 +1,11 @@
 Android_WebView_Reference
 ---
 
+ [WebView 细节，onShowCustomView与JS注入来实现视频全屏播放](http://blog.csdn.net/wbwjx/article/details/54645313)
+
 利用 WebView 来播放 H5 视屏，全屏方案
+webview的硬件加速方案
+WebView API
 
 参考：  
 

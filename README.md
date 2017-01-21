@@ -14,7 +14,7 @@ Android Develop Demos
 - DesignPatterns ： Java设计模式示例代码
 - Mortar_Flow_Samples : Square的 Mortar 与 Flow 库学习 Demo
 - MVP ：简单的 MVP 示例（使用github api）
-- note ：开发中的一些碎片整理
+- note ：开发中的一些碎片整理,包括笔记，psf，doc等
 - ProviderTutorial ： ContentProvider学习之旅
 - retrofit2 : 网络库 Retrofit2 使用与封装
-- Android_WebView_Reference :  WebView播放视屏，全屏方案
+- Android_WebView_Reference :  WebView的使用demo
