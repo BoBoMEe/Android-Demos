@@ -57,3 +57,5 @@ bin
 
 
 更多关于git的操作，参考：http://iissnan.com/progit/
+
+Git查看、删除、重命名远程分支和tag:http://zengrong.net/post/1746.htm
