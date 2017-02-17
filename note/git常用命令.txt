@@ -54,3 +54,6 @@ $ git clean -fdx
 target
 bin
 *.db
+
+
+更多关于git的操作，参考：http://iissnan.com/progit/
