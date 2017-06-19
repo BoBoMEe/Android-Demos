@@ -6,7 +6,7 @@ UsAge
 -----
 
 ```groovy
-compile 'com.bobomee.android:common:1.4.9'
+compile 'com.bobomee.android:common:1.5.0'
 ```
 
 
@@ -58,10 +58,6 @@ Note
 **Fragment优雅的监听 `back` 事件**
 
 > 参考： [两步搞定Fragment的返回键](http://www.jianshu.com/p/fff1ef649fc0)
-
-- CommonAdapter
-
-> Thanks to [tianzhijiexian/CommonAdapter](https://github.com/tianzhijiexian/CommonAdapter)
 
 - Utils
 
