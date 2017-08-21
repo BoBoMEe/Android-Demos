@@ -39,6 +39,13 @@ QA ：两种广播的区别
  ## 注意事项
 
  - 最好在Activity的onResume()注册、onPause()注销
+
+ ## 有序广播特点
+
+ 1. filter.setPriority(10)设置优先级
+ 2. abortBroadcast()取消广播的传播
+ 3. setResultData和setResultExtras将处理的结果存入到Broadcast中，传递给下一个接收者
+ 4. 下一个接收者通过getResultData()和getResultExtras(true)接收高优先级的接收者存入的数据。
  
 
  参考文章；
@@ -46,3 +53,4 @@ QA ：两种广播的区别
  - [Android开发之BroadcastReceiver详解](http://blog.csdn.net/fengyuzhengfan/article/details/38414625)
  - [安卓四大控件之BroadcastReceiver详解](http://blog.csdn.net/qq_27280457/article/details/51840678)
  - [Android四大组件：BroadcastReceiver史上最全面解析](http://blog.csdn.net/carson_ho/article/details/52973504)
+ - [Android随笔之——Android广播机制Broadcast详解](http://www.cnblogs.com/travellife/p/3944363.html)
