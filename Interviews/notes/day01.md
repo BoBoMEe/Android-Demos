@@ -16,6 +16,7 @@ ANR：Activity对事件响应不超过5秒，BroadcastReceiver执行不超过10�
 
 -  要长时间运行的操作，且不与用户交互
 -  应用间数据通信，`Content Provider`多用于数据共享，`BroadcastReceiver`比较耗费系统资源
+两个应用间动态的进行交互还需要通过Service来完成。
 
 ## 生命周期
 
@@ -23,10 +24,10 @@ ANR：Activity对事件响应不超过5秒，BroadcastReceiver执行不超过10�
 
 1. 若服务未启动，会先执行onCreate函数(若服务已启动则不执行此函数)，再执行onStartCommand函数
 2. 调用startService传入相同参数不会启动多个服务(onStartCommand函数会执行多次)
-3. 最终只需要调用一次stopService或stopSelf函数停止服务
+3. 只需要调用一次stopService或stopSelf函数停止服务
 4. 可以将service的处理逻辑放入onStartCommand函数中
 5. 服务一直运行，在程序退出后服务也不会停止，直到stopService或stopSelf函数被调用,或者被系统回收
-6. 若`onStartCommand`返回START_STICKY表示服务通过显式调用启动或停止,
+6. 若`onStartCommand`返回START_STICKY表示服务通过显式调用启动或停止
 
 ### bindService启动
 
@@ -34,19 +35,16 @@ ANR：Activity对事件响应不超过5秒，BroadcastReceiver执行不超过10�
 2. 若服务已启动但尚未绑定，先执行onBind函数，再执行ServiceConnection对象的onServiceConnected函数
 3. 若服务已绑定成功，则直接返回。这里不会自动调用onStartCommand函数。
 4. 通过ServiceConnection对象的onServiceConnected函数为myService变量赋值
-5. 通过unbindService解除绑定服务，如果绑定成功，会先执行Service的onUnbind函数，再执行onDestroy函数
+5. 通过unbindService解除绑定服务，如果解绑成功，会先执行Service的onUnbind函数，再执行onDestroy函数
 
 ## AIDL
 
-## IntentService
-和Service的区别
-1. 运行在工作线程
-2. 不需要手动调用停止接口
-3. IntentService的onStartCommand函数根据mRedelivery属性值返回START_REDELIVER_INTENT或START_NOT_STICKY，而普通Service自定义返回
+## IntentService和Service的区别
 
-##
-
-
+1. 启动一个工作线程去完成用户onHandleIntent中定义的操作
+2. 同一个IntentService的多次请求(startService调用)，在同一个线程中处理，一次只会执行一个请求的onHandleIntent函数
+3. 不需要手动调用停止接口
+4. IntentService的onStartCommand函数根据mRedelivery属性值返回START_REDELIVER_INTENT或START_NOT_STICKY，而普通Service自定义返回
 
 ## 常见问题
 
