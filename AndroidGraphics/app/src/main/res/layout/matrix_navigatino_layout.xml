@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <Button
+      android:id="@+id/map"
+      android:onClick="map"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="map"
+      />
+  <Button
+      android:id="@+id/poly"
+      android:onClick="poly"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="poly"
+      />
+  <Button
+      android:onClick="rect"
+      android:id="@+id/rect"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="rect"
+
+      />
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      />
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      />
+
+
+</LinearLayout>
