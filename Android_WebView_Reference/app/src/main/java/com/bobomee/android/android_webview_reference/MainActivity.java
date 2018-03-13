@@ -39,6 +39,18 @@ public class MainActivity extends AppCompatActivity {
     // Save the web view
     webView = (VideoEnabledWebView) findViewById(R.id.webView);
 
+    webChromeClient = prepareWebChromeClient();
+
+    webView.setWebChromeClient(webChromeClient);
+    // Call private class InsideWebViewClient
+    webView.setWebViewClient(new InsideWebViewClient());
+
+    // Navigate anywhere you want, but consider that this classes have only been tested on YouTube's mobile site
+    webView.loadUrl("http://www.iqiyi.com/");
+  }
+
+  private VideoEnabledWebChromeClient prepareWebChromeClient() {
+
     // Initialize the VideoEnabledWebChromeClient and set event handlers
     View nonVideoLayout = findViewById(R.id.nonVideoLayout); // Your own view, read class comments
     ViewGroup videoLayout =
@@ -46,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     //noinspection all
     View loadingView = getLayoutInflater().inflate(R.layout.view_loading_video,
         null); // Your own view, read class comments
+
     VideoEnabledWebChromeClientConfig lVideoEnabledWebChromeClientConfig =
         VideoEnabledWebChromeClientConfig.newBuilder()
             .mNonVideoLayout(nonVideoLayout)
@@ -55,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             .mToggledFullscreenCallback(mToggledFullscreenCallback)
             .build();
 
-    webChromeClient = new VideoEnabledWebChromeClient(
+    VideoEnabledWebChromeClient webChromeClient = new VideoEnabledWebChromeClient(
         lVideoEnabledWebChromeClientConfig) // See all available constructors...
     {
       // Subscribe to standard events, such as onProgressChanged()...
@@ -64,12 +77,7 @@ public class MainActivity extends AppCompatActivity {
       }
     };
 
-    webView.setWebChromeClient(webChromeClient);
-    // Call private class InsideWebViewClient
-    webView.setWebViewClient(new InsideWebViewClient());
-
-    // Navigate anywhere you want, but consider that this classes have only been tested on YouTube's mobile site
-    webView.loadUrl("http://m.youtube.com");
+    return webChromeClient;
   }
 
   private class InsideWebViewClient extends WebViewClient {

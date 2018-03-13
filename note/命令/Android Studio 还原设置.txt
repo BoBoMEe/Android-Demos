@@ -1,5 +1,0 @@
-rm -rfv ~/Library/Application\ Support/AndroidStudio*
-rm -rfv ~/Library/Preferences/AndroidStudio*
-rm -rfv ~/Library/Caches/AndroidStudio*
-rm -rfv ~/Library/Logs/AndroidStudio*
-rm -rfv ~/.AndroidStudio*
